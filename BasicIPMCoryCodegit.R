@@ -1,8 +1,8 @@
 ######Basic IPM with Cory Code Olowalu, MC, all years, cheat Fecundity, colonal Matrix######
 ####The data read and organization is the same in BasicIPMpack code######
 rm(list=ls(all=TRUE))
-setwd("~/Grad school/CAMEO/R stuff")
-data<- read.delim("~/Grad school/CAMEO/R stuff/sortIPMpack_7Nov2012.txt")
+setwd("C://Users/Megan/IPMcoral")
+data<- read.delim("sortIPMpack.txt")
 ######Clean up data: remove M, add NA, make recruit fecs,add stage and stageNext######
 data<-subset(data,fate_t!="M")
 data$fate_prior[data$fate_prior==""]<-NA
@@ -58,7 +58,6 @@ surv.reg=glm(surv~size,data=OMC,family=binomial())
 summary(surv.reg)
 params$surv.int=coefficients(surv.reg)[1]
 params$surv.slope=coefficients(surv.reg)[2]
-
 
 ####################growth model selection modified from Rob's complex life cycle exercise###############
 go1<-lm(sizeNext~1,data=OMCg)
@@ -181,13 +180,21 @@ c.yx=function(xp,x,params) {
     dnorm(xp,mean=params$clonesize.int+params$clonesize.slope*x,sd=params$clonesize.sd)*
     exp(params$clonenum.int+params$clonenum.slope*x)
 }
+c.y=function(x,params) {
+  u=p.clone.x(x,params)*
+    exp(params$clonenum.int+params$clonenum.slope*x)
+  return (u)
+}
 # 3. recruitment function 
 f.yx=function(xp,x,params) {
       u=dnorm(xp,mean=params$recruit.size.mean,sd=params$recruit.size.sd)*
       exp(params$recruit.int)
       return (u)
 }
-
+f.y=function(xp,params) {
+  u=exp(params$recruit.int)
+  return (u)
+}
 # 1. boundary points b, mesh points y and step size h
 # integration limits - these limits span the range of sizes observed in the data set, and then some.
 min.size<-min(OMC$size,na.rm=T)
@@ -209,9 +216,30 @@ G=h*outer(y,y,g.yx,params=params) # growth kernel
 S=s.x(y,params=params) # survival 
 P=G # placeholder; we're about to redefine P on the next line
 for(i in 1:n) P[,i]=G[,i]*S[i]  # growth/survival kernel
+######constantcorrection for P#####
+nvals <- colSums(P, na.rm = TRUE)
+loc0 <- which(nvals == 0, arr.ind = TRUE)
+if (length(loc0) > 0) {
+  print("warnings - columns that sum to 0 or that have NAs - assuming survival is along the diagonal; plot your Pmatrix to check it")
+  P[, loc0] <- 0
+  P[cbind(loc0, loc0)] <- S
+}
+nvals <- colSums(P, na.rm = TRUE)
+P<- t((t(P)/nvals) * S)
+######################################################################################
 P2=outer(y,y,gs,g.yx=g.yx,s.x=s.x)*h
 C=h*outer(y,y,c.yx,params=params) # reproduction kernel
 F=h*outer(y,y,f.yx,params=params) # reproduction kernel
+###########################constantcorrection for F####################################
+f<-vector(length=100)
+for(i in 1:100) f[i]<- f.y(y,params=params)
+correction.here <- f/colSums(F)
+F<- t(t(F) * correction.here)
+#######################################################################################
+########################ConstantcorrectionforC#########################################
+c<-c.y(y,params=params)
+correction.here <- c/colSums(C)
+C<- t(t(C) * correction.here)
 K=P+F+C #full kernel
 
 # 1. get lamda,v,w  
