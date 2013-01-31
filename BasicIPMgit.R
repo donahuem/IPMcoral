@@ -1,8 +1,8 @@
 ######Basic IPMpack Olowalu, MC, all years, cheat Fecundity, colonal Matrix######
 rm(list=ls(all=TRUE))
-setwd("~/Grad school/CAMEO/R stuff")
+setwd("C://Users/Megan/IPMcoral")
 library(IPMpack)
-data<- read.delim("~/Grad school/CAMEO/R stuff/sortIPMpack_7Nov2012.txt")
+data<- read.delim("sortIPMpack.txt")
 
 ######Clean up data: remove M, add NA, make recruit fecs,add stage and stageNext######
 data<-subset(data,fate_t!="M")
@@ -59,9 +59,9 @@ fo@Transform<-"none"
 #fo@fecNames <- c("rec")
 fo@fecConstants<-data.frame(NA)
 fo@fecByDiscrete<-data.frame(NA)
-dummy.fit <- lm(sizeNext~1, data=OMC)
-dummy.fit$coefficients[1] <- mean(OMC$sizeNext[OMC$fateIPM=="recruit"])
-fo@offspringRel <- dummy.fit
+dummy.fit1 <- lm(sizeNext~1, data=OMC)
+dummy.fit1$coefficients[1] <- mean(OMC$sizeNext[OMC$fateIPM=="recruit"])
+fo@offspringRel <- dummy.fit1
 fo@sdOffspringSize <- sd(OMC$sizeNext[OMC$fateIPM=="recruit"])
 fo@offspringSplitter <- data.frame(continuous=1)
 fo@vitalRatesPerOffspringType <- data.frame(continuous=c(1,1))
@@ -125,5 +125,39 @@ sensitivity1 <- sens(IPM)
 elasticity1 <- elas(IPM)
 filled.contour(Cmatrix@meshpoints,Cmatrix@meshpoints,t(Cmatrix),color=heat.colors,nlevels=20,cex.lab=1.5,main="Cmatrix:Fission Recruitment", xlab= "Size at t",ylab="Size at t+1")
 persp(Pmatrix@meshpoints,Pmatrix@meshpoints,t(IPM),phi=30,theta=300,col="lightgrey",border=NA,shade=0.75,main="Pmatrix:survival and growth", xlab= "Size at t",ylab="Size at t+1")
-sens<-sensParams(growObj=gr1, survObj=sv1, fecObj=fo, nBigMatrix=100, minSize=minsize, maxSize=maxsize, discreteTrans = 1, integrateType = "midpoint", correction = "constant",delta=1e-4)
+sens<-sensParams(growObj=gr1, survObj=sv1, fecObj=fo, nBigMatrix=100, minSize=minsize, maxSize=maxsize)
 barplot(sens$elam, main = expression("Parameter elasticity of population growth rate "* lambda), las = 2, cex.names = 0.5)
+
+xx=seq(0,5,by=.1)
+elascomp<-function(x,gr,sv,nBigMatrix,minsize,maxsize,data,Formula,ec){
+  d<-vector("double")
+  for(i in x) {
+    dummy.fit<-glm(Formula,data,family=poisson)
+    dummy.fit$coefficients[1]=i
+    fo<-new("fecObj")
+    fo@fitFec[[1]]<-dummy.fit
+    fo@Transform<-"none"
+    #fo@fecNames <- c("rec")
+    fo@fecConstants<-data.frame(NA)
+    fo@fecByDiscrete<-data.frame(NA)
+    dummy.fit1 <- lm(sizeNext~1, data=OMC)
+    dummy.fit1$coefficients[1] <- mean(OMC$sizeNext[OMC$fateIPM=="recruit"])
+    fo@offspringRel <- dummy.fit
+    fo@sdOffspringSize <- sd(OMC$sizeNext[OMC$fateIPM=="recruit"])
+    fo@offspringSplitter <- data.frame(continuous=1)
+    fo@vitalRatesPerOffspringType <- data.frame(continuous=c(1,1))
+    rownames(fo@vitalRatesPerOffspringType) <- c("rec","NA")
+    sens<-sensParams(growObj=gr, survObj=sv, fecObj=fo, nBigMatrix=nBigMatrix, minSize=minsize, maxSize=maxsize)  
+    d<-append(d,sens$elam[8],length(d))
+  }
+return (d)  
+  
+}
+d<-elascomp(xx,gr1,sv1,100,minsize,maxsize,OMC,rec~1)
+ec<-as.data.frame(d)
+ec$x<-xx
+yy<-seq(-0.5,0.5,by=(1/50))
+plot(xx,xx,"n",main="Parameter elasticity of population growth rate: recruitment",xlab="recruits/adult",ylab="recruitment elasticity(sens$elam)")
+lines(ec$x,ec$d)
+
+
