@@ -216,30 +216,11 @@ G=h*outer(y,y,g.yx,params=params) # growth kernel
 S=s.x(y,params=params) # survival 
 P=G # placeholder; we're about to redefine P on the next line
 for(i in 1:n) P[,i]=G[,i]*S[i]  # growth/survival kernel
-######constantcorrection for P#####
-nvals <- colSums(P, na.rm = TRUE)
-loc0 <- which(nvals == 0, arr.ind = TRUE)
-if (length(loc0) > 0) {
-  print("warnings - columns that sum to 0 or that have NAs - assuming survival is along the diagonal; plot your Pmatrix to check it")
-  P[, loc0] <- 0
-  P[cbind(loc0, loc0)] <- S
-}
-nvals <- colSums(P, na.rm = TRUE)
-P<- t((t(P)/nvals) * S)
-######################################################################################
+
 P2=outer(y,y,gs,g.yx=g.yx,s.x=s.x)*h
 C=h*outer(y,y,c.yx,params=params) # reproduction kernel
 F=h*outer(y,y,f.yx,params=params) # reproduction kernel
-###########################constantcorrection for F####################################
-f<-vector(length=100)
-for(i in 1:100) f[i]<- f.y(y,params=params)
-correction.here <- f/colSums(F)
-F<- t(t(F) * correction.here)
-#######################################################################################
-########################ConstantcorrectionforC#########################################
-c<-c.y(y,params=params)
-correction.here <- c/colSums(C)
-C<- t(t(C) * correction.here)
+
 K=P+F+C #full kernel
 
 # 1. get lamda,v,w  
@@ -269,5 +250,28 @@ plot(y,repro.val,xlab="Size",type="l",main="Reproductive values")
 image(y,y,t(elas),xlab="Size (t)",ylab="Size (t+1)",main="Elasticity")
 image(y,y,t(sens),xlab="Size (t)",ylab="Size (t+1)", main="Sensitivity")
 persp(y,y,t(K),phi=30,theta=300,col="lightgrey",border=NA,shade=0.75,main="Pmatrix:survival and growth", xlab= "Size at t",ylab="Size at t+1")
+######constantcorrection for P#####
+nvals <- colSums(P, na.rm = TRUE)
+loc0 <- which(nvals == 0, arr.ind = TRUE)
+if (length(loc0) > 0) {
+  print("warnings - columns that sum to 0 or that have NAs - assuming survival is along the diagonal; plot your Pmatrix to check it")
+  P[, loc0] <- 0
+  P[cbind(loc0, loc0)] <- S
+}
+nvals <- colSums(P, na.rm = TRUE)
+P<- t((t(P)/nvals) * S)
+######################################################################################
+###########################constantcorrection for F####################################
+f<-vector(length=100)
+for(i in 1:100) f[i]<- f.y(y,params=params)
+correction.here <- f/colSums(F)
+F<- t(t(F) * correction.here)
+#######################################################################################
+########################ConstantcorrectionforC#########################################
+c<-c.y(y,params=params)
+correction.here <- c/colSums(C)
+C<- t(t(C) * correction.here)
+########################################################################################
 
- 
+Kconstant=P+F+C
+lam=as.real(eigen(Kconstant)$values[1]) 
