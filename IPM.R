@@ -66,8 +66,8 @@ PM.slope=coefficients(M)[2]
 #number of clones per fission event 
 clonenum=vglm(numfiss~utrans*size+fateIPM,data=MCf,family=pospoisson)
 summary(clonenum)
-Fclonenum.int=coefficients(clonenum)[1]
-Mclonenum.int=coefficients(clonenum)[1]+coefficients(clonenum)[11]
+Fclonenum.int=c(coefficients(clonenum)[1],coefficients(clonenum)[1]+coefficients(clonenum)[2:ns])
+Mclonenum.int=c(coefficients(clonenum)[1]+coefficients(clonenum)[11],coefficients(clonenum)[1]+coefficients(clonenum)[11]+coefficients(clonenum)[2:ns])
 clonenum.slope=c(coefficients(clonenum)[10],coefficients(clonenum)[10]+coefficients(clonenum)[12:19])
 
 # size distribution of clones
@@ -119,8 +119,8 @@ params[23,]<-rep(clonesize.int)        #clone size intercept, same across sites
 params[24,]<-rep(clonesize.slope)      #clone size slope, same across sites
 params[25,]<-rep(clonesize.sd2)        #clone size sd, same across sites
 params[26,]<-c(clonesize.varFunc)      #clone size variance increases with size by site
-params[27,]<-rep(Fclonenum.int)        #number of clones from fissLG intercept, same across sites
-params[28,]<-rep(Mclonenum.int)        #number of clones from M intercept, same across sites
+params[27,]<-c(Fclonenum.int)          #number of clones from fissLG intercept, same across sites
+params[28,]<-c(Mclonenum.int)          #number of clones from M intercept, same across sites
 params[29,]<-c(clonenum.slope)         #number of clones slope same for fates and across sites
 params[30,]<-rep(recruit.int)          #number of recruits (kind of made up), same across sites     
 params[31,]<-rep(recruit.size.mean)    #mean size of recruits, same across sites
@@ -185,7 +185,7 @@ for (site in 1:9){
     sigmaxp2<-params[25,site]*exp(2*params[26,site]*x)
     sigmaxp<-sqrt(sigmaxp2)
     p.fiss.x(x,params)*
-    exp(params[27,site]+params[29,site]*x)/(1+exp(params[27,site]+params[29,site]*x))*
+    (params[27,site]+params[29,site]*x)*
     dnorm(xp,params[23,site]+params[24,site]*x,sigmaxp)
   }
 #"M" offspring 
@@ -193,13 +193,13 @@ for (site in 1:9){
     sigmaxp2<-params[25,site]*exp(2*params[26,site]+x)
     sigmaxp<-sqrt(sigmaxp2)
     p.M.x(x,params)*
-    exp(params[28,site]+params[29,site]*x)/(1+exp(params[28,site]+params[29,site]*x))*
+    (params[28,site]+params[29,site]*x)*
     dnorm(xp,params[23,site]+params[24,site]*x,sigmaxp)
   }
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)
   c.y=function(x,params) {
     u=p.clone.x(x,params)*
-    exp(params$clonenum.int+params$clonenum.slope*x)
+    params$clonenum.int+params$clonenum.slope*x
     return (u)
   }
 #recruitment = sexual offspring 
