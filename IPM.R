@@ -1,49 +1,49 @@
 ###########################################################MeganR IPM Code #############################################################################
 library(nlme)
 library(lme4)
-library(VGAM)
+library(VGAM)#For vglmm function with zero truncated poisson
 library(aqfig)# for vertical.image.legend
 library(popbio)
-MCg<-within(MCg,fate<-relevel(fate,ref="growth"))
+MCg<-within(MCg,fate<-relevel(fate,ref="growth")) #makes fate "growth" the zero-level in regression
 dat<-MC #data for this species
 growdat<-MCg #growth data for this species
 fissdat<-MCf #fission only data for this species
 SMfissdat<-MCfs #small fission only data for this species
 x<-seq(from=-2,to=10,by=0.01)#Range of values for lines added to plots
 nx<-10 # number of sites for this species
-nf<-3 #number of fates for this species
+nf<-3 #number of growth fates for this species
 ncoef<-22 # number of coefficients
-n<-300 # number of cuts
+n<-300 # number of cuts for meshpoints/discretization into matrix
 lmc<-lmeControl(niter=10000,msMaxIter=10000)
 ################################################################Vital Rate Functions###################################################################################
 
 #survival regression
 surv.reg=glm(Psurv~size+utrans,data=dat,family=binomial)
 summary(surv.reg)
-surv.int=c(coefficients(surv.reg)[1], coefficients(surv.reg)[1]+coefficients(surv.reg)[3:(nx+1)])
+surv.int=c(coefficients(surv.reg)[1], coefficients(surv.reg)[1]+coefficients(surv.reg)[3:(3+nx-1-1)])
 surv.slope=coefficients(surv.reg)[2]
 
 # growth regression
 growth.reg<-gls(sizeNext~size*utrans+size*fate,weights=varExp(form=~size|utrans),data=growdat,control=lmc)
 summary(growth.reg)
-growth.int=c(coefficients(growth.reg)[1], coefficients(growth.reg)[1]+coefficients(growth.reg)[3:(nx+1)])
+growth.int=c(coefficients(growth.reg)[1], coefficients(growth.reg)[1]+coefficients(growth.reg)[3:(3+nx-1-1)])
 growth.slope=c(coefficients(growth.reg)[2], coefficients(growth.reg)[2]+coefficients(growth.reg)[(nx+nf+1):(2*nx+nf-1)])
 growth.sd2=((summary(growth.reg)$sigma))^2
 growth.varFunc=coef(growth.reg$modelStruct$varStruct,"exp")
 
-fiss.int=c(coefficients(growth.reg)[1]+coefficients(growth.reg)[2+nx], coefficients(growth.reg)[1]+coefficients(growth.reg)[2+nx]+coefficients(growth.reg)[3:(nx+1)])
-fiss.slope=c(coefficients(growth.reg)[2]+coefficients(growth.reg)[(2*nx+nf)], coefficients(growth.reg)[2]+coefficients(growth.reg)[(2*nx+nf)]+coefficients(growth.reg)[(nx+nf+1):(2*nx+nf-1)])
+fiss.int=growth.int+coefficients(growth.reg)[2+nx]
+fiss.slope=growth.slope+coefficients(growth.reg)[(2*nx+nf)]
 
-fuse.int=c(coefficients(growth.reg)[1]+coefficients(growth.reg)[2+nx+1], coefficients(growth.reg)[1]+coefficients(growth.reg)[2+nx+1]+coefficients(growth.reg)[3:(nx+1)])
-fuse.slope=c(coefficients(growth.reg)[2]+coefficients(growth.reg)[(2*nx+nf+1)], coefficients(growth.reg)[2]+coefficients(growth.reg)[(2*nx+nf+1)]+coefficients(growth.reg)[(nx+nf+1):(2*nx+nf-1)])
+fuse.int=growth.int+coefficients(growth.reg)[2+nx+1]
+fuse.slope=growth.slope+coefficients(growth.reg)[(2*nx+nf+1)]
 
-#probability of fission (for fission growth function and clonal matrix)
+#probability of fission conditional on survival (for fission growth function and clonal matrix)
 clone=glm(Pfiss~size+utrans,data=dat,family=binomial)
 summary(clone)
 Pfiss.int=c(coefficients(clone)[1],coefficients(clone)[1]+coefficients(clone)[3:(nx+1)])
 Pfiss.slope=coefficients(clone)[2]
 
-# probability of fusion (for fusion growth function)
+# probability of fusion conditional on survival(for fusion growth function)
 fuse=glm(Pfuse~size*utrans,data=dat,family=binomial)
 summary(fuse)
 Pfuse.int=c(coefficients(fuse)[1],coefficients(fuse)[1]+coefficients(fuse)[3:(nx+1)])
@@ -54,7 +54,7 @@ summary(fuseLG)
 PfuseLG.int=c(coefficients(fuseLG)[1],coefficients(fuseLG)[1]+coefficients(fuseLG)[3:(nx+1)])
 PfuseLG.slope=coefficients(fuseLG)[2]
 
-#number of clones per fission event 
+#number of clones per fission event: zero truncated poisson 
 clonenum=vglm(numfiss~utrans*size,data=fissdat,family=pospoisson)
 summary(clonenum)
 clonenum.int=c(coefficients(clonenum)[1],coefficients(clonenum)[1]+coefficients(clonenum)[2:nx])
@@ -108,7 +108,7 @@ params[22,]<-c(clonenum.slope)         #number of clones slope same for fates an
 #params[23,]<-rep(recruit.int)          #number of recruits (kind of made up), same across sites     
 #params[24,]<-rep(recruit.size.mean)    #mean size of recruits, same across sites
 #params[25,]<-rep(recruit.size.sd)      #sd size of recruits, same across sites
-rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.sd2","growth.varFunc","fiss.int","fiss.slope","fuse.int","fuse.slope","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonesize.int","clonesize.slope","conslize.sd2","clonesize.varFunc","clonenum.int","clonenum.slope")
+rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.sd2","growth.varFunc","fiss.int","fiss.slope","fuse.int","fuse.slope","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonesize.int","clonesize.slope","clonesize.sd2","clonesize.varFunc","clonenum.int","clonenum.slope")
 
 ## utility functions
 #probability of surviving
@@ -154,16 +154,16 @@ rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.
   c.yx=function(xp,x,params) {
     sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
     sigmaxp<-sqrt(sigmaxp2)
-    nfiss<-(params[21,site]+params[22,site]*x)+1
-    (p.fiss.x(x,params)+p.fiss.x(x,params)*p.fuse.x(x,params)*p.fuseLG.x(x,params))*
+    nfiss<-exp(params[21,site]+params[22,site]*x)
+    p.fiss.x(x,params)*
     nfiss*
     dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
   }
 
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)
   c.y=function(x,params) {
-    nfiss<-(params[21,site]+params[22,site]*x)+1
-    u=(p.fiss.x(x,params)+p.fiss.x(x,params)*p.fuse.x(x,params)*p.fuseLG.x(x,params))*nfiss
+    nfiss<-exp(params[21,site]+params[22,site]*x)
+    u=p.fiss.x(x,params)*nfiss
     return (u)
   }
 #recruitment = sexual offspring 
@@ -192,12 +192,11 @@ legend("right", legend = sprintf(levels(growdat$utrans)), col = cl, lwd = 2, xju
 
 ##Growth##
 plot(growdat$size,growdat$sizeNext,col=c(cl[3],cl[8],cl[5],cl[1])[growdat$fateIPM],pch=18,cex=0.95,ylab="Size (t+1)",xlab="Size (t)")
-fategrow<-lm(sizeNext~size+fateIPM,data=growdat)
+fategrow<-lm(sizeNext~size+fate,data=growdat)
 lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[2]*x,col=cl[3],lwd=2)
 lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[3]+coefficients(fategrow)[2]*x,col=cl[8],lwd=2)
 lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[4]+coefficients(fategrow)[2]*x,col=cl[5],lwd=2)
-lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[5]+coefficients(fategrow)[2]*x,col=cl[1],lwd=2)
-legend("bottomright", legend = sprintf(levels(growdat$fateIPM)), col=c(cl[3],cl[8],cl[5],cl[1]), lty=1,lwd=2, xjust = 1, bg = "white")
+legend("bottomright", legend = sprintf(levels(growdat$fate)), col=c(cl[3],cl[8],cl[5],cl[1]), lty=1,lwd=2, xjust = 1, bg = "white")
 
 par(mfrow=c(2,2))
 
@@ -216,10 +215,6 @@ for (site in 1:(nx)) {
   lines(x,params[9,site]+params[10,site]*x,col=cl[site],lwd=2)
 }
 
-plot(growdat$size,growdat$sizeNext,col=cl[growdat$utrans],type="p",pch=18,cex=0.65,main="Fission & Fusion",xlab="Size (t)",ylab="Size (t+1)")
-for (site in 1:(nx)) {
-  lines(x,params[11,site]+params[12,site]*x,col=cl[site],lwd=2)
-}
 legend("bottomright", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
 
 ##Fate Probabilities##
@@ -227,30 +222,24 @@ par(mfrow=c(1,1))
 #Probability of growth#
 plot(dat$size,dat$Pgrowth,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(growth)")
 for (site in 1:(nx)) {
-  lines(x,1-p.fiss.x(x,params=params)-p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.M.x(x,params=params)-p.fuse.x(x,params=params)*(1-p.fuseLG.x(x,params=params)),col=cl[site],lwd=2)
+  lines(x,1-p.fiss.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
 }
 legend("topright", legend = sprintf(levels(growdat$utrans)), col = cl, lwd = 2, xjust = 1, bg = "white")
 ##Probability of fission##
 plot(dat$size,dat$Pfiss,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(fission)")
 for (site in 1:(nx)) {
-  lines(x,p.fiss.x(x,params=params),col=cl[site],lwd=2)
+  lines(x,p.fiss.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
 }
 legend("left", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
 
 #Probability of Large fusion#
 plot(dat$size,dat$Pfuse,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(fusion)")
 for (site in 1:(nx)) {
-  lines(x,p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
+  lines(x,p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
 }
 legend("left", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
 
 
-#Probability of M#
-plot(dat$size,dat$PM,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(Fission + Fusion)")
-for (site in 1:(nx)) {
-  lines(x,p.fiss.x(x,params=params)+p.fuse.x(x,params)*p.fuseLG.x(x,params),col=cl[site],lwd=2)
-}
-legend("left", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
 
 #Number of fission products#
 par(mfrow=c(1,1))
@@ -303,10 +292,9 @@ Kernel<-function(n,params,site){
   # width of the cells
   h=y[2]-y[1] 
   S=s.x(y,params=params) # survival 
-  I=p.fiss.x(y,params=params)
-  U=p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)
-  M=p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)*p.fiss.x(y,params=params)
-  Gr=1-I-U-M-p.fuse.x(y,params=params)*(1-p.fuseLG.x(y,params=params))
+  I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)
+  U=p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)
+  Gr=1-I-U
   
   GG=h*outer(y,y,gg.yx,params=params)
   GI=h*outer(y,y,ig.yx,params=params)
@@ -314,7 +302,7 @@ Kernel<-function(n,params,site){
  
   
   Pg=GG
-  for (i in 1:n) Pg[,i]=GG[,i]*S[i]*(Gr[i]+M[i])
+  for (i in 1:n) Pg[,i]=GG[,i]*S[i]*(Gr[i])
   
   Pi=GI
   for(i in 1:n) Pi[,i]=GI[,i]*S[i]*I[i]
@@ -343,7 +331,7 @@ Kernel<-function(n,params,site){
     P[cbind(loc0, loc0)] <- S
   }
   nvals <- colSums(P, na.rm = TRUE)
-  P<- t((t(P)/nvals) * S*(I+U+M+Gr))
+  P<- t((t(P)/nvals) * S*(I+U+Gr))
   #for F matrix
   #f<-vector(length=n)
   #for(i in 1:n) f[i]<- f.y(y,params=params)
@@ -353,8 +341,7 @@ Kernel<-function(n,params,site){
   c<-c.y(y,params=params)
   correction.here <- c/colSums(C)
   C<- t(t(C) * correction.here)
-  nvals <- colSums(Pi, na.rm = TRUE)
-  
+    
   K=P+C
   
   return(K)

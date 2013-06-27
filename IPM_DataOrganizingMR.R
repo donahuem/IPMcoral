@@ -54,15 +54,15 @@ data$fyearNext<-factor(data$yearNext)
 #Add some NAs, change some column names, add probability of growth and fusion
 data$fec4<-ifelse(data$fec1==1,data$fec2,NA)
 index<-c("growth","dead","fissSM","fissLG","fuseSM","fuseLG","recruit","M")
-values<-c(0,NA,NA,0,1,1,NA,0)
+values<-c(0,NA,NA,0,1,1,NA,1)
 data$Pfuse<-values[match(data$fateIPM,index)]
-values<-c(NA,NA,NA,NA,0,1,NA,NA)
+values<-c(NA,NA,NA,NA,0,1,NA,1)
 data$PfuseLG<-values[match(data$fateIPM,index)]
-values<-c(1,NA,NA,0,0,0,NA,0)
+values<-c(1,NA,NA,0,0,0,NA,1)
 data$Pgrowth<-values[match(data$fateIPM,index)]
 values<-c(0,NA,NA,0,0,0,NA,1)
 data$PM<-values[match(data$fateIPM,index)]
-values<-c(0,NA,NA,1,0,0,NA,0)
+values<-c(0,NA,NA,1,0,0,NA,1)
 data$Pfiss<-values[match(data$fateIPM,index)]
 values<-c(1,0,NA,1,1,1,NA,1)
 data$Psurv<-values[match(data$fateIPM,index)]
