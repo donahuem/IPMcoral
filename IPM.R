@@ -155,9 +155,8 @@ rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.
     sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
     sigmaxp<-sqrt(sigmaxp2)
     nfiss<-exp(params[21,site]+params[22,site]*x)
-    p.fiss.x(x,params)*
-    nfiss*
-    dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+    #return: prob of fission * number of fission products * prob that a fisser of size x prodcues a product of size xp
+    p.fiss.x(x,params)*nfiss*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
   }
 
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)
@@ -292,9 +291,9 @@ Kernel<-function(n,params,site){
   # width of the cells
   h=y[2]-y[1] 
   S=s.x(y,params=params) # survival 
-  I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)
-  U=p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)
-  Gr=1-I-U
+  I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params) #fisser-only = I
+  U=(p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)  #fusion of U AND Ms:  include Ms in fusion growth
+  Gr=1-p.fiss.x(y,params=params) - p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params)
   
   GG=h*outer(y,y,gg.yx,params=params)
   GI=h*outer(y,y,ig.yx,params=params)
@@ -318,7 +317,7 @@ Kernel<-function(n,params,site){
   #F=h*outer(y,y,f.yx,params=params)
   
   ###############################################################IPM!###############################################################
-#Full kernel with 4 growth functions.  One each for fission, fusion, M, and growth
+#Full kernel with 3 growth functions.  One each for fission, fusion (including M) and growth
   P = Pg+Pi+Pu
   #####################################################################constant correction#######################################################
   #which will multiply every column of the IPM by a constant sufficient to adjust values to those predicted for survival at that size
@@ -331,7 +330,8 @@ Kernel<-function(n,params,site){
     P[cbind(loc0, loc0)] <- S
   }
   nvals <- colSums(P, na.rm = TRUE)
-  P<- t((t(P)/nvals) * S*(I+U+Gr))
+  P<- t((t(P)/nvals) * S*(I+U+Gr))  # should be:  t((t(P)/nvals)*(S*p.smfuse)
+     #want to normalize to the survival and the prob of being a small fuser
   #for F matrix
   #f<-vector(length=n)
   #for(i in 1:n) f[i]<- f.y(y,params=params)
