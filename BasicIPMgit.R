@@ -133,3 +133,21 @@ Fmatrix<-createIPMFmatrix(fecObj=fo,minSize=minsize,maxSize=maxsize,nBigMatrix =
 Cmatrix<-createIPMCmatrix(nBigMatrix=100,clonalObj=co,minSize=minsize,maxSize=maxsize,correction="constant")
 IPMconstant<-Pmatrix+Fmatrix+Cmatrix
 Re(eigen(IPMconstant)$value[1])
+sensitivity2 <- sens(IPMconstant)
+elasticity2 <- elas(IPMconstant)
+par(mfrow = c(1, 1), bty = "l", pty = "m")
+filled.contour(Cmatrix@meshpoints,Cmatrix@meshpoints,t(elasticity2),color=heat.colors,nlevels=20,cex.lab=1.5,main="Elasticity", xlab= "Size at t",ylab="Size at t+1")
+persp(Pmatrix@meshpoints,Pmatrix@meshpoints,t(IPM),phi=30,theta=300,col="lightgrey",border=NA,shade=0.75,main="Pmatrix:survival and growth", xlab= "Size at t",ylab="Size at t+1")
+sens<-sensParams(growObj=gr1, survObj=sv1, fecObj=fo, nBigMatrix=100, minSize=minsize, maxSize=maxsize)
+barplot(sens$elam, main = expression("Parameter elasticity of population growth rate "* lambda), las = 2, cex.names = 0.5)
+
+#################Elasticity with different recruitment###################################
+
+dummy.fit$coefficients[1]=1
+fo@fitFec[[1]]<-dummy.fit
+Fmatrix<-createIPMFmatrix(fecObj=fo,minSize=minsize,maxSize=maxsize,nBigMatrix = 100,correction="constant")
+IPMconstant<-Pmatrix+Fmatrix+Cmatrix
+Re(eigen(IPMconstant)$value[1])
+elasticity2 <- elas(IPMconstant)
+par(mfrow = c(1, 1), bty = "l", pty = "m")
+filled.contour(Cmatrix@meshpoints,Cmatrix@meshpoints,t(elasticity2),color=heat.colors,nlevels=20,cex.lab=1.5,main="Elasticity", xlab= "Size at t",ylab="Size at t+1")
