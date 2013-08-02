@@ -1,20 +1,26 @@
 ###########################################################MeganR IPM Code #############################################################################
-library(nlme)
-library(lme4)
+library(nlme) # for gls()
+library(lme4) # for recruitment
 library(VGAM)#For vglmm function with zero truncated poisson
 library(aqfig)# for vertical.image.legend
-library(popbio)
+library(popbio) # for eigen.analysis()
+library(MASS)# for negative binomial distribution
+library(countreg) # for zerotrunc for geometric distribution
+library(nnet) # for multinomial distribution
+
 MCg<-within(MCg,fate<-relevel(fate,ref="growth")) #makes fate "growth" the zero-level in regression
 dat<-MC #data for this species
 growdat<-MCg #growth data for this species
 fissdat<-MCf #fission only data for this species
-SMfissdat<-MCfs #small fission only data for this species
-x<-seq(from=-2,to=10,by=0.01)#Range of values for lines added to plots
+fisssizedat<-MCfs #small fission only data for this species
+recdat<-MCr # number of recruits per quad per year
+recsizedat<-MCrs # recruits only for size distribution
+densdat<-MCd #number of colonies per quad per year
+denssizedat<-MCd # colonies present at time t (all but recruits and fissSM) for sfd
 nx<-10 # number of sites for this species
 nf<-3 #number of growth fates for this species
-ncoef<-22 # number of coefficients
+ncoef<-50 # number of coefficients
 n<-300 # number of cuts for meshpoints/discretization into matrix
-lmc<-lmeControl(niter=10000,msMaxIter=10000)
 ################################################################Vital Rate Functions###################################################################################
 
 #survival regression
@@ -24,7 +30,7 @@ surv.int=c(coefficients(surv.reg)[1], coefficients(surv.reg)[1]+coefficients(sur
 surv.slope=coefficients(surv.reg)[2]
 
 # growth regression
-growth.reg<-gls(sizeNext~size*utrans+size*fate,weights=varExp(form=~size|utrans),data=growdat,control=lmc)
+growth.reg<-gls(sizeNext~size*utrans+size*fate,weights=varExp(form=~size|utrans),data=growdat)
 summary(growth.reg)
 growth.int=c(coefficients(growth.reg)[1], coefficients(growth.reg)[1]+coefficients(growth.reg)[3:(3+nx-1-1)])
 growth.slope=c(coefficients(growth.reg)[2], coefficients(growth.reg)[2]+coefficients(growth.reg)[(nx+nf+1):(2*nx+nf-1)])
@@ -54,29 +60,85 @@ summary(fuseLG)
 PfuseLG.int=c(coefficients(fuseLG)[1],coefficients(fuseLG)[1]+coefficients(fuseLG)[3:(nx+1)])
 PfuseLG.slope=coefficients(fuseLG)[2]
 
-#number of clones per fission event: zero truncated poisson 
-clonenum=vglm(numfiss~utrans*size,data=fissdat,family=pospoisson)
+#number of clones per fission event: zero truncated poisson
+#function increases too steeply over time.  Don't want the probability to go to zero or to balloon at higher values of size
+clonenum=vglm(numfiss~size,data=fissdat,family=pospoisson)
 summary(clonenum)
-clonenum.int=c(coefficients(clonenum)[1],coefficients(clonenum)[1]+coefficients(clonenum)[2:nx])
-clonenum.slope=c(coefficients(clonenum)[nx+1],coefficients(clonenum)[nx+1]+coefficients(clonenum)[(nx+2):(2*nx)])
+clonenum.int=c(coefficients(clonenum)[1])#,coefficients(clonenum)[1]+coefficients(clonenum)[2:nx])
+clonenum.slope=c(coefficients(clonenum)[2])#[nx+1],coefficients(clonenum)[nx+1]+coefficients(clonenum)[(nx+2):(2*nx)])
+
+#number of clones per fission event: negative binomial distribution
+clonenb <- glm.nb(numfiss~size,data=fissdat)
+summary (clonenb)
+clonenb.int<-coefficients(clonenb)[1]
+clonenb.slope<-coefficients(clonenb)[2]
+
+#number of clones per fission event: geometric dtribution
+clonegeo=zerotrunc(numfiss~size,data=fissdat,dist="geometric")
+summary(clonegeo)
+clonegeo.int<-coefficients(clonegeo)[1]
+clonegeo.slope<-coefficients(clonegeo)[2]
+
+#Multinomial probability of 1,2,3 or more fission products from a fission event
+#Backup in case we can't find an adequate replacement for zero truncated poisson
+clonemulti=multinom(fnumfiss~size, data=fissdat)
+summary(clonemulti)
+clonemulti.int.1=coefficients(clonemulti)[1]
+clonemulti.slope.1=coefficients(clonemulti)[4]
+clonemulti.int.2=coefficients(clonemulti)[3]
+clonemulti.slope.2=coefficients(clonemulti)[6]
+clonemulti.int.3=coefficients(clonemulti)[2]
+clonemulti.slope.3=coefficients(clonemulti)[5]
+##Testing fits for 5-10
+clonemulti2=multinom(fnumfiss2~size, data=fissdat)
+summary(clonemulti2)
+clonemulti2.int.1=coefficients(clonemulti2)[2]
+clonemulti2.slope.1=coefficients(clonemulti2)[9]
+clonemulti2.int.2=coefficients(clonemulti2)[7]
+clonemulti2.slope.2=coefficients(clonemulti2)[14]
+clonemulti2.int.3=coefficients(clonemulti2)[6]
+clonemulti2.slope.3=coefficients(clonemulti2)[13]
+clonemulti2.int.4=coefficients(clonemulti2)[1]
+clonemulti2.slope.4=coefficients(clonemulti2)[8]
+clonemulti2.int.6=coefficients(clonemulti2)[4]
+clonemulti2.slope.6=coefficients(clonemulti2)[11]
+clonemulti2.int.7=coefficients(clonemulti2)[3]
+clonemulti2.slope.7=coefficients(clonemulti2)[10]
+clonemulti2.int.10=coefficients(clonemulti2)[5]
+clonemulti2.slope.10=coefficients(clonemulti2)[12]
 
 # size distribution of clones
-clonesize=gls(sizeNext~size,data=SMfissdat,weights=varExp(form=~size))
+clonesize=gls(sizeNext~size,data=fisssizedat,weights=varExp(form=~size))
 summary(clonesize)
 clonesize.int=coefficients(clonesize)[1]
 clonesize.slope=coefficients(clonesize)[2]
 clonesize.sd2=(summary(clonesize)$sigma)^2
 clonesize.varFunc=coef(clonesize$modelStruct$varStruct,"exp")
 
-#recruitment rate
-#replace recruit.int with number of recruits per "adult" averaged quad over years then total of quads
+##recruitment rate as in Bruno et al. 2011 page 130
+#number of recruits per quad.  Includes all years not just the years including years excluded from growth due to 2 year change etc.
+rcrt.lmeU.Y <- glmer(recruits~utrans+(1|year),family=poisson,data=recdat)
+summary(rcrt.lmeU.Y)
+recruit.int= c(fixef(rcrt.lmeU.Y)[1],fixef(rcrt.lmeU.Y)[1]+fixef(rcrt.lmeU.Y)[2:nx])
+
+#number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
+dens.lmeU.Y <- glmer(colnum~utrans+(1|year),family=poisson,data=densdat)
+summary(dens.lmeU.Y)
+dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+fixef(dens.lmeU.Y)[2:nx])
+
+##Recruitment rate using averages of observed recruits and colony density (not using lm just averaged by hand a while ago so data may have changed)
 #recruit.int=0.0905897
+
+##Tried different recruitment rates will think about more with sensitivity analyses
 #recruit.int=0.01
 
 #size distribution of recruits
+rec.sizeU<-lm(sizeNext~utrans,data=recsizedat)
+summary(rec.sizeU)
+recruit.size.mean=c(coefficients(rec.sizeU)[1],coefficients(rec.sizeU)[1]+coefficients(rec.sizeU)[2:nx])
+recruit.size.sd=(summary(rec.sizeU)$sigma)
 #recruit.size.mean=mean(dat$sizeNext[dat$fateIPM=="recruit"])
 #recruit.size.sd=sd(dat$sizeNext[dat$fateIPM=="recruit"])
-
 
 #make slots for parameters
 #params<-data.frame(surv.int=NA,surv.slope=NA,growth.int=NA,growth.slope=NA,growth.sd=NA,growth.varFunc=NA,recruit.int=NA,recruit.size.mean=NA,recruit.size.sd=NA,clone.int=NA,clone.slope=NA,clonenum.int=NA,clonenum.slope=NA,clonesize.int=NA,clonesize.slope=NA,clonesize.sd=NA,fuse.int=NA,fuse.slope=NA,grow.int=NA,grow.slope=NA)
@@ -103,12 +165,37 @@ params[17,]<-rep(clonesize.int)        #clone size intercept, same across sites
 params[18,]<-rep(clonesize.slope)      #clone size slope, same across sites
 params[19,]<-rep(clonesize.sd2)        #clone size sd, same across sites
 params[20,]<-rep(clonesize.varFunc)    #clone size variance increases with size by site
-params[21,]<-c(clonenum.int)           #number of clones intercept, same across sites
-params[22,]<-c(clonenum.slope)         #number of clones slope same for fates and across sites
-#params[23,]<-rep(recruit.int)          #number of recruits (kind of made up), same across sites     
-#params[24,]<-rep(recruit.size.mean)    #mean size of recruits, same across sites
-#params[25,]<-rep(recruit.size.sd)      #sd size of recruits, same across sites
-rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.sd2","growth.varFunc","fiss.int","fiss.slope","fuse.int","fuse.slope","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonesize.int","clonesize.slope","clonesize.sd2","clonesize.varFunc","clonenum.int","clonenum.slope")
+params[21,]<-rep(clonenum.int)         #number of clones intercept, same across sites using zero truncated poisson
+params[22,]<-rep(clonenum.slope)       #number of clones slope same for fates and across sites using zerotruncated poisson
+params[23,]<-c(recruit.int)            #number of recruits (kind of made up), same across sites     
+params[24,]<-c(recruit.size.mean)      #mean size of recruits, same across sites
+params[25,]<-rep(recruit.size.sd)      #sd size of recruits, same across sites
+params[26,]<-c(dens.int)               #colony density by quad   
+params[27,]<-rep(clonemulti.int.1)     #clonenum intercept using multinomial distribution: 1clonal product
+params[28,]<-rep(clonemulti.slope.1)   #clonenum slope using multinomial distribution: 1 clonal product
+params[29,]<-rep(clonemulti.int.2)     #clonenum intercept using multinomial distribution: 2 clonal products
+params[30,]<-rep(clonemulti.slope.2)   #clonenum slope using multinomial distribution: 2 clonal products
+params[31,]<-rep(clonemulti.int.3)     #clonenum intercept using multinomial distribution: 3clonal products
+params[32,]<-rep(clonemulti.slope.3)   #clonenum slope using multinomial distribution: 3 clonal products
+params[33,]<-rep(clonenb.int)          #clonenum intercept using multinomial distribution: >3 clonal products
+params[34,]<-rep(clonenb.slope)        #clonenum slope using multinomial distribution: >3 clonal products
+params[35,]<-rep(clonegeo.int)         #clonenum intercept using geometric distribution
+params[36,]<-rep(clonegeo.slope)       #clonenum slope using geometric distribution
+params[37,]<-rep(clonemulti2.int.1)     #clonenum intercept using multinomial distribution: 1clonal product
+params[38,]<-rep(clonemulti2.slope.1)   #clonenum slope using multinomial distribution: 1 clonal product
+params[39,]<-rep(clonemulti2.int.2)     #clonenum intercept using multinomial distribution: 2 clonal products
+params[40,]<-rep(clonemulti2.slope.2)   #clonenum slope using multinomial distribution: 2 clonal products
+params[41,]<-rep(clonemulti2.int.3)     #clonenum intercept using multinomial distribution: 3clonal products
+params[42,]<-rep(clonemulti2.slope.3) 
+params[43,]<-rep(clonemulti2.int.4)
+params[44,]<-rep(clonemulti2.slope.4)
+params[45,]<-rep(clonemulti2.int.6)
+params[46,]<-rep(clonemulti2.slope.6)
+params[47,]<-rep(clonemulti2.int.7)
+params[48,]<-rep(clonemulti2.slope.7)
+params[49,]<-rep(clonemulti2.int.10)
+params[50,]<-rep(clonemulti2.slope.10)
+#rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.sd2","growth.varFunc","fiss.int","fiss.slope","fuse.int","fuse.slope","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonesize.int","clonesize.slope","clonesize.sd2","clonesize.varFunc","clonenum.int","clonenum.slope","recruit.int","recruit.size.mean","recruit.size.sd","dens.int","clonemulti.int.1", "clonemulti.slope.1","clonemulti.int.2","clonemulti.slope.2","clonemulti.int.3","clonemult.slope.3","clonenb.int","clonenb.slope","clonegeo.int","clonegeo.slope")
 
 ## utility functions
 #probability of surviving
@@ -150,149 +237,192 @@ rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.
     return(u/(1+u))
   }
 
-#Fission offspring 
+
+#Fission offspring using zero truncated poisson
   c.yx=function(xp,x,params) {
     sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
     sigmaxp<-sqrt(sigmaxp2)
     nfiss<-exp(params[21,site]+params[22,site]*x)
-    #return: prob of fission * number of fission products * prob that a fisser of size x prodcues a product of size xp
+    ##return: prob of fission * number of fission products * prob that a fisser of size x prodcues a product of size xp
     p.fiss.x(x,params)*nfiss*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
   }
-
+#Fission offspring using negative binomial distribution
+cnb.yx=function(xp,x,params) {
+  sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+  sigmaxp<-sqrt(sigmaxp2)
+  nfiss<-exp(params[33,site]+params[34,site]*x)
+  ##return: prob of fission * number of fission products * prob that a fisser of size x prodcues a product of size xp
+  p.fiss.x(x,params)*nfiss*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+}
+#Fission offspring using geometric distribution
+cgeo.yx=function(xp,x,params) {
+  sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+  sigmaxp<-sqrt(sigmaxp2)
+  nfiss<-exp(params[35,site]+params[36,site]*x)
+  ##return: prob of fission * number of fission products * prob that a fisser of size x prodcues a product of size xp
+  p.fiss.x(x,params)*nfiss*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+}
+#Fission offspring using multinomial response
+  p.c1.x=function(x,params) {
+    u<-exp(params[27,site]+params[28,site]*x)
+    ud<-exp(params[27,site]+params[28,site]*x)+exp(params[29,site]+params[30,site]*x)+exp(params[31,site]+params[32,site]*x)+1    
+    return(u/ud)    
+  }
+  p.c2.x=function(x,params) {
+    u<-exp(params[29,site]+params[30,site]*x)
+    ud<-exp(params[27,site]+params[28,site]*x)+exp(params[29,site]+params[30,site]*x)+exp(params[31,site]+params[32,site]*x)+1    
+    return(u/ud)  
+  }
+  p.c3.x=function(x,params) {
+    u<-exp(params[31,site]+params[32,site]*x)
+    ud<-exp(params[27,site]+params[28,site]*x)+exp(params[29,site]+params[30,site]*x)+exp(params[31,site]+params[32,site]*x)+1    
+    return(u/ud)  
+  }  
+####
+  p2.c1.x=function(x,params) {
+    u<-exp(params[37,site]+params[38,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1    
+    return(u/ud)    
+  }
+  p2.c2.x=function(x,params) {
+    u<-exp(params[39,site]+params[40,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)  
+  }
+  p2.c3.x=function(x,params) {
+    u<-exp(params[41,site]+params[42,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)  
+  }
+  p2.c4.x=function(x,params) {
+    u<-exp(params[43,site]+params[44,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)      
+  }
+  p2.c6.x=function(x,params) {
+    u<-exp(params[45,site]+params[46,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)  
+  }
+  p2.c7.x=function(x,params) {
+    u<-exp(params[47,site]+params[48,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)  
+  }
+  p2.c10.x=function(x,params) {
+    u<-exp(params[49,site]+params[50,site]*x)
+    ud<-exp(params[37,site]+params[38,site]*x)+exp(params[39,site]+params[40,site]*x)+exp(params[41,site]+params[42,site]*x)+exp(params[43,site]+params[44,site]*x)+exp(params[45,site]+params[46,site]*x)+exp(params[47,site]+params[48,site]*x)+exp(params[49,site]+params[50,site]*x)+1
+    return(u/ud)  
+  }
+####
+  c1.yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.c1.x(x,params)*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c2.yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.c2.x(x,params)*2*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c3.yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.c3.x(x,params)*3*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c4.yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    (1-p.c1.x(x,params)-p.c2.x(x,params)-p.c3.x(x,params))*4*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+######
+  c1.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c1.x(x,params)*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c2.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c2.x(x,params)*2*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c3.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c3.x(x,params)*3*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c4.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c4.x(x,params)*4*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c5.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*(1-p2.c1.x(x,params)-p2.c2.x(x,params)-p2.c3.x(x,params)-p2.c4.x(x,params)-p2.c6.x(x,params)-p2.c7.x(x,params)-p2.c10.x(x,params))*5*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c6.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c6.x(x,params)*6*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c7.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c7.x(x,params)*7*2*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+  c10.2yx=function(xp,x,params) {
+    sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+    sigmaxp<-sqrt(sigmaxp2)
+    p.fiss.x(x,params)*p2.c10.x(x,params)*10*3*dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+  }
+ cs.yx=function(xp,x,params){
+   sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
+   sigmaxp<-sqrt(sigmaxp2)
+   dnorm(xp,params[17,site]+params[18,site]*x,sigmaxp)
+ }
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)
   c.y=function(x,params) {
     nfiss<-exp(params[21,site]+params[22,site]*x)
     u=p.fiss.x(x,params)*nfiss
     return (u)
   }
+
 #recruitment = sexual offspring 
-  #f.yx=function(xp,x,params) {
-   # u=dnorm(xp,params[23,site],params[24,site])*
-    #exp(params[25,site])
-    #return (u)
- # }
+  f.yx=function(xp,x,params) {
+    r=exp(params[23,site])/exp(params[26,site])
+    u=dnorm(xp,params[24,site],params[25,site])*r
+    return (u)
+ }
 # recruits per adult for "constant correction" of fecundity matrix (no size distribution of offspring)
-  #f.y=function(xp,params) {
-   # u=exp(params$recruit.int)
-    #return (u)
-  #}
-
-#####################################################################Plot Vital Rate Regressions#######################################################
-##Survival##
-cl<-c("cyan","mediumturquoise","dodgerblue","green3","purple","olivedrab2","orchid1","blue","darkblue")
-
-#cl<-rainbow(nx)
-plot(dat$size,dat$Psurv,col=cl[dat$utrans],type="p",yaxt="n",xlab="Size (t)",ylab="Survival Probability")
-axis(2,at=seq(0,1, by=0.2))
-for (site in 1:(nx)) {
-  lines(x,s.x(x,params=params),col=cl[site],lwd=2)
-}
-legend("right", legend = sprintf(levels(growdat$utrans)), col = cl, lwd = 2, xjust = 1, bg = "white")
-
-##Growth##
-plot(growdat$size,growdat$sizeNext,col=c(cl[3],cl[8],cl[5],cl[1])[growdat$fateIPM],pch=18,cex=0.95,ylab="Size (t+1)",xlab="Size (t)")
-fategrow<-lm(sizeNext~size+fate,data=growdat)
-lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[2]*x,col=cl[3],lwd=2)
-lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[3]+coefficients(fategrow)[2]*x,col=cl[8],lwd=2)
-lines(x,coefficients(fategrow)[1]+coefficients(fategrow)[4]+coefficients(fategrow)[2]*x,col=cl[5],lwd=2)
-legend("bottomright", legend = sprintf(levels(growdat$fate)), col=c(cl[3],cl[8],cl[5],cl[1]), lty=1,lwd=2, xjust = 1, bg = "white")
-
-par(mfrow=c(2,2))
-
-plot(growdat$size,growdat$sizeNext,col=cl[growdat$utrans],type="p",pch=18,cex=0.65,main="Stasis",xlab="Size (t)",ylab="Size (t+1)")
-for (site in 1:(nx)) {
-  lines(x,params[3,site]+params[4,site]*x,col=cl[site],lwd=2)
-}
-
-plot(growdat$size,growdat$sizeNext,col=cl[growdat$utrans],type="p",pch=18,cex=0.65,main="Fission",xlab="Size (t)",ylab="Size (t+1)")
-for (site in 1:(nx)) {
-  lines(x,params[7,site]+params[8,site]*x,col=cl[site],lwd=2)
-}
-
-plot(growdat$size,growdat$sizeNext,col=cl[growdat$utrans],type="p",pch=18,cex=0.65,main="Fusion",xlab="Size (t)",ylab="Size (t+1)")
-for (site in 1:(nx)) {
-  lines(x,params[9,site]+params[10,site]*x,col=cl[site],lwd=2)
-}
-
-legend("bottomright", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
-
-##Fate Probabilities##
-par(mfrow=c(1,1))
-#Probability of growth#
-plot(dat$size,dat$Pgrowth,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(growth)")
-for (site in 1:(nx)) {
-  lines(x,1-p.fiss.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
-}
-legend("topright", legend = sprintf(levels(growdat$utrans)), col = cl, lwd = 2, xjust = 1, bg = "white")
-##Probability of fission##
-plot(dat$size,dat$Pfiss,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(fission)")
-for (site in 1:(nx)) {
-  lines(x,p.fiss.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
-}
-legend("left", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
-
-#Probability of Large fusion#
-plot(dat$size,dat$Pfuse,col=cl[dat$utrans],type="p",ylim=c(0,1),xlab="Size (t)",ylab="Prob(fusion)")
-for (site in 1:(nx)) {
-  lines(x,p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params)-p.fiss.x(x,params=params)*p.fuse.x(x,params=params)*p.fuseLG.x(x,params=params),col=cl[site],lwd=2)
-}
-legend("left", legend = sprintf(levels(growdat$utrans)), col = cl, lwd=2, xjust = 1, bg = "white")
-
-
-
-#Number of fission products#
-par(mfrow=c(1,1))
-plot(fissdat$size,fissdat$numfiss,col=cl[fissdat$utrans],type="p",pch=18,xlab="Size (t)",ylab="# of fission products/'parent colony'")
-for (site in 1:(nx)) {
-  lines(x,exp(params[21,site]+params[22,site]*x)+1,col=cl[site],lwd=2)
-}
-legend("topleft", legend = sprintf(levels(fissdat$utrans)), col = cl, lwd = 2, xjust = 1, bg = "white")
-
-##Does same as above but predicts using vglmm instead of my function to get density.  See Megan D's note below about exp(G)+1##
-temp_lap <- rep(x,nx)
-temp_ut<-{}
-for (i in 1:nx) {
-  temp_ut <- c(temp_ut,rep(unique(fissdat$utrans)[i],length(x)))
-}
-temp_u <- unique(fissdat$utrans)[temp_ut]
-MyData<-data.frame(size=temp_lap,utrans=temp_u)  
-G <- predictvglm(clonenum,newdata=MyData,type="link",se=TRUE)#with "link" can get s.e. bands; need to exp(G) + 1 for predictions
-plot(fissdat$size,fissdat$numfiss,col=cl[fissdat$utrans],type="p",xlab="Log(Area)[t]",ylim=c(0.5,10.5),xlim=c(-2,10),ylab="Number of Fission Products")
-lines(MyData$size[MyData$utrans==unique(MyData$utrans)[1]],exp(G$fit[MyData$utrans==unique(MyData$utrans)[1]])+1,lty=1,col=cl[1])
-#title("Number of Fission Products ~ Zero-Trunc-Poisson(Log(Area) + Transect)")
-for (i in 2:nx) {
-  lines(MyData$size[MyData$utrans==unique(MyData$utrans)[i]],exp(G$fit[MyData$utrans==unique(MyData$utrans)[i]])+1,lty=1,col=cl[i])
-}
-legend("topleft",legend=unique(fissdat$utrans),col=cl[1:nx],lty=1,pt.cex=0.3,bty="n")
-
-##size distribution of clones##
-hist(SMfissdat$sizeNext,ylim=c(0,1),freq=FALSE)
-for (site in 1:nx){
-  sigmaxp2<-params[19,site]*exp(2*params[20,site]*x)
-  sigmaxp<-sqrt(sigmaxp2)
-  lines(x,dnorm(x,(params[17,site]+params[18,site]*x),sigmaxp),col=cl[site])
-}
+  f.y=function(xp,params) {
+    r=exp(params[23,site])/exp(params[26,site])
+    return (r)
+  }
 
 
 ##########################################################discretization/build component kernels##################################
 # integration limits - these limits span the range of sizes observed in the data set, and then some.
 min.size<-min(dat$size,na.rm=T)
 max.size<-max(dat$size,na.rm=T)+2
+#boundary points (the edges of the cells defining the kernel)
+b=min.size+c(0:n)*(max.size-min.size)/n 
+
+# mesh points= midpoints of the cells (could also use cumulative)
+y=0.5*(b[1:n]+b[2:(n+1)])
+
+# width of the cells
+h=y[2]-y[1]
+
 # the function outer() evaluates the kernel at all pairwise combinations of the two vectors y and y. 
 # P is the growth/suvival kernel.  Pi, Pu, Pm,and Pg are growth kernels for 4 growth fates (fission, fusion, and growth)
-Kernel<-function(n,params,site){
+Kernel<-function(y,n,params){
 
-  #boundary points (the edges of the cells defining the kernel)
-  b=min.size+c(0:n)*(max.size-min.size)/n 
   
-  # mesh points= midpoints of the cells (could also use cumulative)
-  y=0.5*(b[1:n]+b[2:(n+1)])
-  
-  # width of the cells
-  h=y[2]-y[1] 
+  #calculate the proportion of each size class that grows according to I,U,Gr functions
   S=s.x(y,params=params) # survival 
   I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params) #fisser-only = I
-  U=(p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params)  #fusion of U AND Ms:  include Ms in fusion growth
+  U=(p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params))  #fusion of U AND Ms:  include Ms in fusion growth
   Gr=1-p.fiss.x(y,params=params) - p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params)
   
   GG=h*outer(y,y,gg.yx,params=params)
@@ -311,13 +441,49 @@ Kernel<-function(n,params,site){
   
     
 #C is the clonal offspring kernel
+  #with zero truncated poisson
   C=h*outer(y,y,c.yx,params=params)
   
+  #with negative binomial
+  Cnb=h*outer(y,y,cnb.yx,params=params)
+  
+  #with geometric
+  Cgeo=h*outer(y,y,cgeo.yx,params=params)
+  
+  #with multinomial response
+  PI=p.fiss.x(y,params)
+  PC1=p.c1.x(y,params)*1
+  PC2=p.c2.x(y,params)*2
+  PC3=p.c3.x(y,params)*3
+  PC4=(1-p.c1.x(y,params)-p.c2.x(y,params)-p.c3.x(y,params))*4
+  #C1=h*outer(y,y,c1.yx,params=params)
+  PC=PC1+PC2+PC3+PC4
+  #C11=C1
+  #for (i in 1:n) C11[,i]=C1[,i]*PI[i]
+  #C2=h*outer(y,y,c2.yx,params=params)
+  #C12=C2
+  #for (i in 1:n) C12[,i]=C2[,i]*PI[i]
+  #C3=h*outer(y,y,c3.yx,params=params)
+  #C13=C3
+  #for (i in 1:n) C13[,i]=C3[,i]*PI[i]
+  #C4=h*outer(y,y,c4.yx,params=params)
+  #C14=C4
+  #for (i in 1:n) C14[,i]=C4[,i]*PI[i]
+  #Cmulti=C11+C12+C13+C14
+  #Cmulti=C1+C2+C3+C4
+  Cmulti=h*outer(y,y,cs.yx,params)
+  Cmulti1=Cmulti
+  for (i in 1:n) Cmulti1[,i]=Cmulti[,i]*PI[i]*PC[i]
+  
 #F is the fecundity/sexually reproduced offspring kernel
-  #F=h*outer(y,y,f.yx,params=params)
+  #R sets minimum reproductive size based on outer 1-2 cm not reproducing used area of a circle to determine smalles reproductive size = pi 2 squared.
+  #R=c(rep(0,times=121),rep(1,times=179))
+  #F is currently using the fecundity constant calculated based on Bruno et al. 2011
+  F=h*outer(y,y,f.yx,params=params)
+  #for(i in 1:n) F[,i]=F[,i]*R[i]
   
   ###############################################################IPM!###############################################################
-#Full kernel with 3 growth functions.  One each for fission, fusion (including M) and growth
+#Full kernel with 3 growth functions.  One each for fission, fusion (including M), and growth
   P = Pg+Pi+Pu
   #####################################################################constant correction#######################################################
   #which will multiply every column of the IPM by a constant sufficient to adjust values to those predicted for survival at that size
@@ -330,69 +496,56 @@ Kernel<-function(n,params,site){
     P[cbind(loc0, loc0)] <- S
   }
   nvals <- colSums(P, na.rm = TRUE)
-  P<- t((t(P)/nvals) * S*(I+U+Gr))  # should be:  t((t(P)/nvals)*(S*p.smfuse)
-     #want to normalize to the survival and the prob of being a small fuser
+  P<- t((t(P)/nvals) * S)*(1-p.fuse.x(y,params)*(1-p.fuseLG.x(y,params)))  # should be:  t((t(P)/nvals)*(S*p.smfuse)
+  #want to normalize to the survival and the prob of being a small fuser
+  
   #for F matrix
-  #f<-vector(length=n)
-  #for(i in 1:n) f[i]<- f.y(y,params=params)
-  #correction.here <- f/colSums(F)
-  #F<- t(t(F) * correction.here)
+  f<-vector(length=n)
+  for(i in 1:n) f[i]<- f.y(y,params=params)
+  correction.here <- f/colSums(F)
+  F<- t(t(F) * correction.here)
+  
   #for Cmatrix
-  c<-c.y(y,params=params)
-  correction.here <- c/colSums(C)
-  C<- t(t(C) * correction.here)
+  #c<-c.y(y,params=params)
+  #correction.here <- c/colSums(C)
+  #C<- t(t(C) * correction.here)
     
-  K=P+C
+  K=P+Cmulti1
   
   return(K)
 }  
 ###############################################################Lambda,SSD,RV,Damping ratio, Elasticity matrix###############################################################
-par(mfrow = c(3, 3))
-par(cex = 0.6)
-par(mar = c(1,1,1,1), oma = c(4, 4, 2, 4))
-par(tcl = -0.25)
-par(mgp = c(2, 0.6, 0))
-n=300
-#boundary points (the edges of the cells defining the kernel)
-b=min.size+c(0:n)*(max.size-min.size)/n 
-
-# mesh points= midpoints of the cells (could also use cumulative)
-y=0.5*(b[1:n]+b[2:(n+1)])
-for(site in 1:nx){
-  K<-Kernel(n,params,site)
-  sn<-levels(dat$utrans)[site]
-  image(y,y,t(K), col=topo.colors(300),main=sn,axes=FALSE)
-}
-mtext("Size (t)", side = 1, outer = TRUE, cex = 1, line = 2.2,col = "grey20")
-mtext("Size (t+1)", side = 2, outer = TRUE, cex = 1, line = 2.2,col = "grey20")
-par(mfrow=c(1,1))
-par(mar=c(4,1,1,1),oma=c(1,1,1,1))
-vertical.image.legend(col=topo.colors(n),zlim=c(0,0.05))
-
-## Lambda, SSD, RV, Damping ratio, Elasticity matrix
+## To get lambda for each site
 big<-array(0, c(n, n, nx))
 eig<-vector("numeric", nx)
 
 for (site in 1:nx){
-  big[,,site]<-Kernel(n, params, site)
+  big[,,site]<-Kernel(y,n, params)
   A<-eigen.analysis(big[,,site])
   eig[site]<-A$lambda1
 }
 
-eigsensP<-array(0,c(nx,length(params[,1])))
-eigsensN<-array(0,c(nx,length(params[,1])))
-#sensN<-array(0, c(n, n, nx,length(params[,1])))
-#sensP<-array(0, c(n, n, nx,length(params[,1])))
+eig
+par(mar = c(7, 4, 4, 2) + 0.1)
+xvals<-barplot(eig)
+text(xvals, par("usr")[3] - 0.25, srt = 45, adj = 1,labels = unique(dat$utrans), xpd = TRUE)
+
+##to get elasticitie for each site
+
+eigsensP<-array(0,c(nx,ncoef))
+eigsensN<-array(0,c(nx,ncoef))
+#sensN<-array(0, c(n, n, nx,ncoef))
+#sensP<-array(0, c(n, n, nx,ncoef))
 
 for (site in 1:nx){
-  for (j in 1:length(params[,1])) {
+  for (j in 1:ncoef) {
     svecP<-params
     svecP[j,]<-1.1*svecP[j,]
-    sensP<-Kernel(n, params=svecP, site)
+    sensP<-Kernel(y,n, params=svecP)
     eigsensP[site,j]<-eigen.analysis(sensP)$lambda1
     svecN<-params
     svecN[j,]<-0.9*svecN[j,]
-    sensN<-Kernel(n, params=svecN, site)
+    sensN<-Kernel(y,n, params=svecN)
     eigsensN[site,j]<-eigen.analysis(sensN)$lambda1
   }
 }
@@ -411,11 +564,9 @@ barplot(elasP[i,],main="Elasticity",names.arg=rownames(params),las=2)
 
 #legend("bottom",legend=sort(unique(utrans),decreasing=TRUE),horiz=TRUE,pch=1,col=cl[ns:1],cex=1,bty="n")
 
-## To get lambda for each site
-eig
 
-par(mar = c(7, 4, 4, 2) + 0.1)
-xvals<-barplot(eig)
-text(xvals, par("usr")[3] - 0.25, srt = 45, adj = 1,labels = unique(dat$utrans), xpd = TRUE)
+
+
+
 
 
