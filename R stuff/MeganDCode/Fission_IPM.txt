@@ -1,0 +1,193 @@
+#GET AND ORGANIZE THE DATA
+
+rm(list=ls(all=TRUE)) ## Clear all
+
+setwd("~/Grad school/CAMEO/R stuff") #set working directory to location of this script & data file
+
+getwd() #check working directory is set properly
+
+#read in data
+data<-read.table("sortdata_13Jan2012.txt", sep="\t", header=TRUE)#read in data
+
+#create site names
+sitenametable<-c("HonN",
+                 "HonS",
+                 "Molo",
+                 "Puam",
+                 "Kahe",
+                 "KanB",
+                 "KanP",
+                 "Maal",
+                 "Olow",
+                 "Papa")
+sitetable<-c("Honolua",
+             "Honolua",
+             "Molokini",
+             "Puamana",
+             "Kahekili",
+             "Kanahena",
+             "Kanahena",
+             "Maalaea",
+             "Olowalu",
+             "Papaula")
+data$site<-sitetable[charmatch(data$sitename,sitenametable)]
+data$site<-factor(data$site)
+data$quad<-factor(paste("Q",data$quad,sep=""))
+
+#create transect names
+data$trans <- as.character(data$depthname)
+data <- within(data,trans[sitename=="HonS"]<-"S")
+data <- within(data,trans[sitename=="HonN"]<-"N")
+data$trans <-factor(data$trans)
+
+#create unique names for transect, quad, and colony
+data$utrans<-factor(paste(data$site,data$trans,sep="."))
+data$uquad <-factor(paste(data$utrans,data$quad,sep="."))
+data$ucolony <-factor(paste(data$utrans,data$quad,data$species,data$colony,sep="."))
+
+#add max wave height to each transect
+wavedata<-read.table("WaveValuesMaui_Import.txt", sep="\t", header=TRUE)#read in wave data
+data$avgWH <- wavedata$avgWH[match(data$utrans,wavedata$transect)]
+data$maxWH <- wavedata$maxWH[match(data$utrans,wavedata$transect)]
+
+#make year a factor
+data$fyear_t<-factor(data$year_t)
+data$fyear_t1<-factor(data$year_t1)                          
+
+#create some additional variables using logical conditions on fate
+data$surv = NA   #SURVIVAL
+  data <- within(data,surv[fate_t1!="D"]<-1) #if you're not dead, you survived'
+  data <- within(data,surv[fate_t1=="D"]<-0) #if you're dead, you're dead
+  data <- within(data,surv[fate_t1=="R"|fate_t1=="N"]<-NA) #don't count if new recruit
+data$fiss = NA   #FISSION
+  data <- within(data,fiss[fate_t1=="I"|fate_t1=="M"]<-1)
+  data <- within(data,fiss[fate_t1!="I" & fate_t1!="M"]<-0)
+  data <- within(data,fiss[fate_t1=="R"|fate_t1=="N"]<-NA) #don't count if new recruit
+data$fuse = NA   #FUSION
+  data <- within(data,fuse[fate_t1=="U"|fate_t1=="M"]<-1)
+  data <- within(data,fuse[fate_t1!="U" & fate_t1!="M"]<-0)
+  data <- within(data,fuse[fate_t1=="R"|fate_t1=="N"]<-NA) #don't count if new recruit
+
+#create some size & growth measures
+data$lnarea_t<-log(data$area_t)
+data$lnarea_t1<-log(data$area_t1)
+data$lnperi_t <-log(data$peri_t)
+data$lnperi_t1 <-log(data$peri_t1)
+data$logarea_t<-log10(data$area_t)
+data$logarea_t1<-log10(data$area_t1)
+
+
+data$PAratio<-data$peri_t/data$area_t
+data$grArea<-log(data$area_t1/data$area_t)
+data$grPeri<-log(data$peri_t1/data$peri_t)
+data$grPAR<-log((data$area_t1/data$peri_t1)/(data$area_t/data$peri_t))
+data$grDel <- data$area_t1-data$area_t
+data$grPct<-100*data$grDel/data$area_t
+data$grRatio<-data$area_t1/data$area_t
+  
+#check format of data
+  str(data) #check structure of data and variables
+#check which sites should be excluded for which species b/c too few colonies
+  table(data$utrans,data$species)
+
+
+#create separate dataframes for three most abundant species
+#exclude 2-year observations
+#exclude transects with fewer than 20 growth observations
+MC<-subset(data,(species=="MC" & !skipyear & site!="Kanahena" & site!="Papaula" & utrans!="Puamana.13m"))
+PL<-subset(data,(species=="PL" & !skipyear & utrans!="Kanahena.10m" & utrans!="Olowalu.07m"))
+PC<-subset(data,(species=="PC" & !skipyear & utrans!="Honolua.S" & utrans!="Olowalu.07m" & utrans!="Papaula.03m"))
+
+#data for GROWTH model, "S" only (excludes fission, fusion)
+MCg<-subset(MC,(fate_t1=="S"))
+PLg<-subset(PL,(fate_t1=="S"))
+PCg<-subset(PC,(fate_t1=="S"))
+
+#Would it be better to model growing and shrinking colonies separately?
+MCgp<-subset(MCg,grArea>=0)
+MCgn<-subset(MCg,grArea<0)
+PLgp<-subset(PLg,grArea>=0)
+PLgn<-subset(PLg,grArea<0)
+
+#Model growth with linear mixed-effects model in nlme
+library(nlme) 
+
+#Some data exploration MC
+library(lattice)
+#to see if fates group in LOG RATIO growth by size
+byfatet<-data.frame(MCg$lnarea_t,MCg$grArea,MCg$fate_t)
+byfatet$group<-factor(byfatet$MCg.fate_t, labels=c('red',"blue","black","green","black","yellow"))
+xyplot(byfatet$MCg.grArea~byfatet$MCg.lnarea_t,groups=byfatet$MCg.fate_t,col=levels(byfatet$group))
+
+#to see if fates group in PCT growth by size
+byfatet2<-data.frame(MCg$lnarea_t,MCg$grPct,MCg$fate_t)
+byfatet2$group<-factor(byfatet2$MCg.fate_t, labels=c('red',"blue","black","green","black","yellow"))
+xyplot(byfatet2$MCg.grPct~byfatet2$MCg.lnarea_t,groups=byfatet2$MCg.fate_t,col=levels(byfatet2$group))
+
+#to see if fates group in PCT POSITIVE growth by size
+byfatet3<-data.frame(MCgp$lnarea_t,MCgp$grPct,MCgp$fate_t)
+byfatet3$group<-factor(byfatet3$MCgp.fate_t, labels=c('red',"blue","black","green","black"))
+xyplot(byfatet3$MCgp.grPct~byfatet3$MCgp.lnarea_t,groups=byfatet3$MCgp.fate_t,col=levels(byfatet3$group))
+
+#to see if fates group in PCT NEGATIVE growth by size
+byfatet4<-data.frame(MCgn$lnarea_t,MCgn$grPct,MCgn$fate_t)
+byfatet4$group<-factor(byfatet4$MCgn.fate_t, labels=c('red',"blue","black","green","black","yellow"))
+xyplot(byfatet4$MCgn.grPct~byfatet4$MCgn.lnarea_t,groups=byfatet4$MCgn.fate_t,col=levels(byfatet4$group))
+
+#to see if sites group in growth by sizeMC
+bysite<-data.frame(MCg$lnarea_t,MCg$grArea,MCg$sitename)
+ bysite$group<-factor(bysite$MCg.sitename,labels=c(col=c(1:6)))
+xyplot(bysite$MCg.grArea~bysite$MCg.lnarea_t,groups=bysite$MCg.fate_t,col=levels(bysite$group))
+
+#to see if sites group in PCT growth by size
+bysite2<-data.frame(MCg$lnarea_t,MCg$grPct,MCg$sitename)
+bysite2$group<-factor(bysite2$MCg.sitename, labels=c(col=(1:6)))
+xyplot(bysite2$MCg.grPct~bysite2$MCg.lnarea_t,groups=bysite2$MCg.sitename,col=levels(bysite2$group))
+
+#to see if sites group in PCT POSITIVE growth by size
+bysite3<-data.frame(MCgp$lnarea_t,MCgp$grPct,MCgp$sitename)
+bysite3$group<-factor(bysite3$MCgp.sitename, labels=c(col=c(1:6)))
+xyplot(bysite3$MCgp.grPct~bysite3$MCgp.lnarea_t,groups=bysite3$MCgp.sitename,col=levels(bysite3$group))
+xyplot(bysite3$MCgp.grPct~bysite3$MCgp.lnarea_t,groups=bysite3$MCgp.sitename,col=levels(bysite3$group),scales=list(y=list(log=2)))
+
+#to see if fates group in PCT NEGATIVE growth by size
+bysite4<-data.frame(MCgn$lnarea_t,MCgn$grPct,MCgn$sitename)
+bysite4$group<-factor(bysite4$MCgn.sitename, labels=c(col=c(1:6)))
+xyplot(bysite4$MCgn.grPct~bysite4$MCgn.lnarea_t,groups=bysite4$MCgn.sitename,col=levels(bysite4$group))
+xyplot(bysite4$MCgn.grPct~bysite4$MCgn.lnarea_t,scales=list(y=list(log=2)),groups=bysite4$MCgn.sitename,col=levels(bysite4$group))
+
+## Mosaic for fate t to fate t1
+boxplot(PL$lnarea_t~PL$fate_t)
+local({pkg <- select.list(sort(.packages(all.available = TRUE)),graphics=TRUE) if(nchar(pkg)) library(pkg, character.only=TRUE)})
+library(vcd)
+mosaic(~MC$fate_t+MC$fate_t1)
+
+##Mosaic for fate t and site
+mosaic(~MC$fate_t+MC$sitename)
+
+## Fate and Size are size of the colony in year t and fate of colony in year t related?
+boxplot(MC$lnarea_t~MC$fate_t)
+
+# Multinomial logistic regression for fate t1
+logtable<-data.frame(MC$fate_t1,MC$fate_t,MC$lnarea_t,MC$sitename,MC$depthname)
+library(mlogit)
+mltable<-mlogit.data(logtable,choice="MC.fate_t1", shape="wide")
+model1<-mlogit(MC.fate_t1~1|MC.fate_t+MC.lnarea_t+MC.sitename+MC.depthname,data=mltable)
+summary(model1)
+require(ggplot2)
+
+##Plot to see if fission products smaller than fisser
+
+Fissionplot <- read.csv("~/Grad school/CAMEO/R stuff/Fissionplot.CSV")
+qplot(Fissionplot$colony.ID,lnarea_t1,data=Fissionplot, colour=fissiongroup)
+
+##Binomial logistic regression for fate t1
+# Fission only ie.I or not I
+
+fissionbinomial <- read.csv("~/Grad school/CAMEO/R stuff/fissionbinomial.CSV")
+model2<-glm(fissionbinomial$fissionbinomial~fissionbinomial$fate_t+fissionbinomial$lnarea_t+fissionbinomial$sitename+fissionbinomial$depthname,family=binomial)
+summary(model2)
+anova(model2,test="Chisq")
+model3<-glm(fissionbinomial$fissionbinomial~fissionbinomial$fate_t+fissionbinomial$lnarea_t+fissionbinomial$depthname,family=binomial)
+summary(model3)
+anova(model3,test="Chisq")

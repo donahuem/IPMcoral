@@ -14,16 +14,21 @@ xyplot(Psurv~size|utrans,xlab="Log(Area)[t]",data=dat, ylab="Survival",auto.key=
 #first, just look at FE model
 surv.full<-glm(Psurv~size*utrans+size*fyear+utrans*fyear,data=dat,family=binomial)
 drop1(surv.full,test="Chi")
-surv.U0Y<-glm(Psurv~size*fyear+utrans*fyear,data=dat,family=binomial)
+#drop size *fyear p-value=0.3999
+surv.U0Y<-glm(Psurv~size*utrans+utrans*fyear,data=dat,family=binomial)
 drop1(surv.U0Y,test="Chi")
+#drop size*utrans p-value=0.2507
 surv.U0Y0<-glm(Psurv~size+utrans*fyear,data=dat,family=binomial)
 drop1(surv.U0Y0,test="Chi")
+#keep utrans*fyear p-value=6.904e-06 and size main effect p-value=2.2e-16
 ##utrans*fyear interaction significantly improves fit but wouldn't include as a fixed effect so look at FE before RE## 
+
 surv.U<-glm(Psurv~size*utrans,data=dat,family=binomial)
 drop1(surv.U,test="Chi")
+#drop size*utrans p-value=0.5459
 surv.U0<-glm(Psurv~size+utrans,data=dat,family=binomial)
 drop1(surv.U0,test="Chi")
-##Keep utrans main effects (P-value=7.028e-07)##
+##Keep size p-value=2.2e-16 and utrans p-value=1.278e-06 main effects##
 
 ############################################################################################################################################
 #Next, try RE for quad and year
@@ -32,8 +37,8 @@ surv.U.Q0 <- glmer(Psurv~size*utrans +(1|uquad),data=dat,family=binomial)
 surv.U.Y0 <- glmer(Psurv~size*utrans+(1|fyear),data=dat,family=binomial)
 #compare 
 anova(surv.U.Q0Y0,surv.U.Q0,surv.U.Y0)
-##surv.U.Q0Y0 better by AIC but do we want to use our concatenated year/quad?##
-##If we don't want to use uyear, fyear is next best of RE but does not decrease AIC from FE model##
+##surv.U.Q0Y0 better by AIC but we do not want to use our concatenated year/quad##
+##If we don't want to use uyear, fyear is next best and decreases AIC from FE (both with size+utrans only) by delta=11.724##
 surv.U.Y<-glmer(Psurv~size*utrans+(size|fyear),data=dat,family=binomial)
 anova(surv.U.Y,surv.U.Y0)
 ##surv.U.Y0 is a better fit than surv.U.Y)##

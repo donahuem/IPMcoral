@@ -1,0 +1,5 @@
+pdata<-read.csv("MeganPlotData.csv")
+View(pdata)
+library(lattice)
+xyplot(avg.Psurv.~year|utrans,data=pdata,groups=pdata$quad,auto.key=TRUE)
+xyplot(avg.Psurv.~numquad|utrans,data=pdata,groups=pdata$year,auto.key=TRUE)
