@@ -1,13 +1,13 @@
-###########################################################MeganR Fixed Effect Vital Rates and Parameters Matrix#############################################################################
-library(nlme) # for gls()and gnls()
-library(lme4) # for recruitment
-library(VGAM)#For vglmm function with zero truncated poisson
-
+################MeganR Fixed Effect Vital Rates and Parameters Matrix#############################################################################
+library(nlme) # for gls(), lme(), nlmer()
+library(lme4) # glmer()
+#library(MASS)
+#library(nnet)
 nx<-10 # number of sites for this species
-ncoef<-36 # number of coefficients
+ncoef<-32 # number of coefficients
 n<-300 # number of cuts for meshpoints/discretization into matrix
 
-################################################################Vital Rate Functions###################################################################################
+###############Vital Rate Functions###################################################################################
 
 #survival regression
 surv.reg.re0<-glmer(Psurv~size+(1|utrans),data=MC,family=binomial)
@@ -16,10 +16,10 @@ surv.int.re0=c(fixed.effects(surv.reg.re0)[1]+random.effects(surv.reg.re0)[[1]][
 surv.slope.re0=fixed.effects(surv.reg.re0)[2]
 
 # growth regression
-growth.reg.re.a0<-nlme(sizeNext~a+b*size+c*exp(-d*size),data=GONGS,fixed=a+b+c+d~1,random=a~1|utrans,start=list(fixed=c(1,1,1,1)),control=gnlsControl(nlsTol=0.1))
-growth.int.a0<-c(fixed.effects(growth.reg.re.a0)[1]+random.effects(growth.reg.re.a0)[1:10,1])
+growth.reg.re.a0<-nlme(sizeNext~a+b*size+c*exp(-d*size),data=GONGS,fixed=a+b+c+d~1,random=c~1|utrans,start=list(fixed=c(1,1,1,1)),control=gnlsControl(nlsTol=0.1))
+growth.int.a0<-fixed.effects(growth.reg.re.a0)[1]
 growth.slope.a0<-fixed.effects(growth.reg.re.a0)[2]
-growth.e1.a0<-fixed.effects(growth.reg.re.a0)[3]
+growth.e1.a0<-c(fixed.effects(growth.reg.re.a0)[3]+random.effects(growth.reg.re.a0)[1:10,1])
 growth.e2.a0<-fixed.effects(growth.reg.re.a0)[4]
 growth.sd.a0<-summary(growth.reg.re.a0)$sigma
 
@@ -61,37 +61,21 @@ summary(fuseLG.re0)
 PfuseLG.int.re0=c(fixed.effects(fuseLG.re0)[1]+random.effects(fuseLG.re0)[[1]][1:10,1])
 PfuseLG.slope.re0=fixed.effects(fuseLG.re0)[2]
 
-##Probability of hi or low fission product numbers conditional on fission
-hilo <- glm(Philo~size,data=MCf,family=binomial)
-summary(hilo)
-Philo.int<-coefficients(hilo)[1]
-Philo.slope<-coefficients(hilo)[2]
-
 #number of clones per fission event: 2 functions for data subset with hi (4-10) and lo (1-3) numfiss using zero truncated poisson
-
-clonenumhi=vglm(numfiss~size,data=hinum,family=pospoisson)
-summary(clonenumhi)
-clonenumhi.int=coefficients(clonenumhi)[1]
-clonenumhi.slope=coefficients(clonenumhi)[2]
-
-clonenumlo=vglm(numfiss~size,data=lonum,family=pospoisson)
-summary(clonenumlo)
-clonenumlo.int=coefficients(clonenumlo)[1]
-clonenumlo.slope=coefficients(clonenumlo)[2]
-
-# size distribution of clones
-clonesize=gls(sizeNext~size,data=MCfs,weights=varExp(form=~size))
-summary(clonesize)
-clonesize.int=coefficients(clonesize)[1]
-clonesize.slope=coefficients(clonesize)[2]
-clonesize.sd2=(summary(clonesize)$sigma)^2
-clonesize.varFunc=coef(clonesize$modelStruct$varStruct,"exp")
+clonenum=multinom(fnumfiss~size,data=MCf)
+summary(clonenum)
+clonenum1.int=coefficients(clonenum)[1,1]
+clonenum1.slope=coefficients(clonenum)[1,2]
+clonenum2.int=coefficients(clonenum)[3,1]
+clonenum2.slope=coefficients(clonenum)[3,2]
+clonenum3.int=coefficients(clonenum)[2,1]
+clonenum3.slope=coefficients(clonenum)[2,2]
 
 ##recruitment rate as in Bruno et al. 2011 page 130
 #number of recruits per quad.  Includes all years not just the years including years excluded from growth due to 2 year change etc.
-rcrt.lmeU.Y <- glmer(recruits~utrans+(1|year),family=poisson,data=MCr)
+rcrt.lmeU.Y <- glmer(recruits~1+(1|utrans)+(1|year),family=poisson,data=MCr)
 summary(rcrt.lmeU.Y)
-recruit.int= c(fixef(rcrt.lmeU.Y)[1],fixef(rcrt.lmeU.Y)[1]+fixef(rcrt.lmeU.Y)[2:nx])
+recruit.int= c(fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
 
 
 ##Recruitment rate using averages of observed recruits and colony density (not using lm just averaged by hand a while ago so data may have changed)
@@ -101,22 +85,22 @@ recruit.int= c(fixef(rcrt.lmeU.Y)[1],fixef(rcrt.lmeU.Y)[1]+fixef(rcrt.lmeU.Y)[2:
 #recruit.int=0.01
 
 #size distribution of recruits
-rec.sizeU<-lm(sizeNext~utrans,data=MCrs)
+rec.sizeU<-lme(sizeNext~1,random=~1|utrans,data=MCrs)
 summary(rec.sizeU)
-recruit.size.mean=c(coefficients(rec.sizeU)[1],coefficients(rec.sizeU)[1]+coefficients(rec.sizeU)[2:nx])
+recruit.size.mean=c(fixef(rec.sizeU)[1]+ranef(rec.sizeU)[1:10,1])
 recruit.size.sd=(summary(rec.sizeU)$sigma)
 #recruit.size.mean=mean(MC$sizeNext[MC$fateIPM=="recruit"])
 #recruit.size.sd=sd(MC$sizeNext[MC$fateIPM=="recruit"])
 
 #number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
-dens.lmeU.Y <- glmer(colnum~utrans+(1|year),family=poisson,data=MCd)
+dens.lmeU.Y <- glmer(colnum~1+(1|utrans)+(1|year),family=poisson,data=MCd)
 summary(dens.lmeU.Y)
-dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+fixef(dens.lmeU.Y)[2:nx])
+dens.int=c(fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
 
 # Size distribution of colonies colonies present at time t (all but recruits and fissSM)
-col.size<-lm(sizeNext~utrans,data=MCds)
+col.size<-lme(size~1,random=~1|utrans,data=MCds)
 summary(col.size)
-colsize.int=c(coefficients(col.size)[1],coefficients(col.size)[1]+coefficients(col.size)[2:10])
+colsize.int=c(fixef(col.size)[1]+ranef(col.size)[1:10,1])
 colsize.sd=(summary(col.size)$sigma)
 
 r<-c(rep(0,nx))
@@ -132,9 +116,9 @@ params<-matrix(0, ncoef, nx)  #creates a matrix of zeros with ncoef rows and nx 
 
 params[1,]<-c(surv.int.re0)               #survival intercept by site
 params[2,]<-rep(surv.slope.re0)           #survival slope wrt size, same across sites
-params[3,]<-c(growth.int.a0)             #growth linear intercept by site
+params[3,]<-rep(growth.int.a0)             #growth linear intercept by site
 params[4,]<-rep(growth.slope.a0)         #growth linear slope by site
-params[5,]<-rep(growth.e1.a0)            #growth exponential intercept (constant coefficient),same across sites
+params[5,]<-c(growth.e1.a0)            #growth exponential intercept (constant coefficient),same across sites
 params[6,]<-rep(growth.e2.a0)            #growth exponential slope, same across sites
 params[7,]<-rep(growth.sd.a0)            #growth standard deviation, same across sites
 params[8,]<-rep(es.int)               #Extreme negative growth intercept, same across sites
@@ -153,18 +137,14 @@ params[20,]<-c(Pfuse.int.re0)             #Probability of fusion intercept by si
 params[21,]<-rep(Pfuse.slope.re0)         #Probability of fusion slope, same across site
 params[22,]<-c(PfuseLG.int.re0)           #Probability of being large fusion intercept given that you survived and fused by site
 params[23,]<-rep(PfuseLG.slope.re0)       #probability of being a large fusion slope given that you survived and fused same across sites
-params[24,]<-rep(clonesize.int)       #clone size intercept, same across sites
-params[25,]<-rep(clonesize.slope)     #clone size slope, same across sites
-params[26,]<-rep(clonesize.sd2)       #clone size sd, same across sites
-params[27,]<-rep(clonesize.varFunc)   #clone size variance increases with size, same across sites
-params[28,]<-rep(clonenumlo.int)      #clonenum intercept lo number of fission events, same across sites 
-params[29,]<-rep(clonenumlo.slope)    #clonenum slope lo number of fission events, same across sites 
-params[30,]<-rep(clonenumhi.int)      #clonenum intercept hi number of fission events, same across sites 
-params[31,]<-rep(clonenumhi.slope)    #clonenum slope hi number of fission events, same across sites 
-params[32,]<-rep(Philo.int)           #Probability of a fisser producing a lo number of recruits intercept, same across sites
-params[33,]<-rep(Philo.slope)         #Probability of a fisser producing a lo number of recruits slope, same across sites
-params[34,]<-c(recruit.size.mean)     #mean size of recruitsby site
-params[35,]<-rep(recruit.size.sd)     #sd size of recruits, same across sites
-params[36,]<-c(r)                     #estimated number of recruits per colony by site (as in Bruno et al. 2011)
+params[24,]<-rep(clonenum1.int)      #clonenum intercept lo number of fission events, same across sites 
+params[25,]<-rep(clonenum1.slope)    #clonenum slope lo number of fission events, same across sites 
+params[26,]<-rep(clonenum2.int)      #clonenum intercept lo number of fission events, same across sites 
+params[27,]<-rep(clonenum2.slope)    #clonenum slope lo number of fission events, same across sites 
+params[28,]<-rep(clonenum3.int)      #clonenum intercept lo number of fission events, same across sites 
+params[29,]<-rep(clonenum3.slope)    #clonenum slope lo number of fission events, same across sites 
+params[30,]<-c(recruit.size.mean)     #mean size of recruitsby site
+params[31,]<-rep(recruit.size.sd)     #sd size of recruits, same across sites
+params[32,]<-c(r)                     #estimated number of recruits per colony by site (as in Bruno et al. 2011)
 
-rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.e1","growth.e2","growth.sd","Pes","es.int","es.slope","es.sd","fiss.int","fiss.slope","fiss.sd","fuse.int","fuse.slope","fuse.sd","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonesize.int","clonesize.slope","clonesize.sd2","clonesize.varFunc","clonenumlo.int","clonenumlo.slope","clonenumhi.int","clonenumhi.slope","Philo.int","Philo.slope","recruit.size.mean","recruit.size.sd","r")
+rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.e1","growth.e2","growth.sd","Pes","es.int","es.slope","es.sd","fiss.int","fiss.slope","fiss.sd","fuse.int","fuse.slope","fuse.sd","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonenum1.int","clonenum1.slope","clonenum2.int","clonenum2.slope","clonenum3.int","clonenum3.slope","recruit.size.mean","recruit.size.sd","r")

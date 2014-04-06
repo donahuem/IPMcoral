@@ -1,7 +1,5 @@
 ################################MeganR IPM Kernel Function #############################################################################
 library(popbio) # for eigen.analysis()
-nx<-10 # number of sites for this species
-ncoef<-36 # number of coefficients
 n<-300 # number of cuts for meshpoints/discretization into matrix
 
 ############ integration limits - these limits span the range of sizes observed in the data set, and then some.
@@ -27,7 +25,7 @@ Kernel<-function(y,n,params){
   S=s.x(y,params=params) # survival 
   I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params) #fisser-only = I
   U=(p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params))  #fusion of U AND Ms:  include Ms in fusion growth
-  Gr=1-p.fiss.x(y,params=params) - p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params)
+  Gr=1-p.fiss.x(y,params=params)- p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params)
   ES=p.es.x(y,params=params)
   
   GS=h*outer(y,y,gs.yx,params=params)
@@ -49,13 +47,8 @@ Kernel<-function(y,n,params){
   
   #C is the clonal offspring kernel
   
-  #C is the clonal offspring kernel
-  
-  #with hi vs lo models
-  Clo=h*outer(y,y,clo.yx,params=params)
-  Chi=h*outer(y,y,chi.yx,params=params)
-  C=Clo+Chi
-  
+  C=h*outer(y,y,c.yx,params=params)
+    
   #F is the fecundity/sexually reproduced offspring kernel
   #F is currently using the fecundity constant calculated based on Bruno et al. 2011
   F=h*outer(y,y,f.yx,params=params)
@@ -82,7 +75,7 @@ Kernel<-function(y,n,params){
   F<- t(t(F) * correction.here)
   
   #for Cmatrix
-  c<-clo.y(y,params=params)+chi.y(y,params)
+  c<-c.y(y,params=params)
   correction.here <- c/colSums(C)
   C<- t(t(C) * correction.here)
   

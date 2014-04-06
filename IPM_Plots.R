@@ -199,6 +199,7 @@ mtext("Transition Probabilities", side = 4, outer = TRUE, cex = 1, line = 5,col 
 
 par(mfrow=c(1,1))
 par(mar=c(1,1,1,1),oma=c(1,1,1,5))
+library(aqfig)
 vertical.image.legend(col=topo.colors(300),zlim=c(mi,ma))
                       
 #Elemental elasticities                      

@@ -12,7 +12,7 @@ for (site in 1:nx){
 eig
 par(mar = c(7, 4, 4, 2) + 0.1)
 xvals<-barplot(eig,ylab="Population Growth Rate (lambda)")
-text(xvals, par("usr")[3] - 0.05, srt = 45, adj = 1,labels = unique(dat$utrans), xpd = TRUE)
+text(xvals, par("usr")[3] - 0.05, srt = 45, adj = 1,labels = unique(MC$utrans), xpd = TRUE)
 
 ##to get elasticitie for each site
 

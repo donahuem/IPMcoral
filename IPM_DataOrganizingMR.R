@@ -2,7 +2,7 @@
 rm(list=ls(all=TRUE)) ## Clear all
 setwd("C://Users/Megan/IPMcoral")# for MeganR
 getwd() #check working directory is set properly
-data<- read.delim("sortIPMpack_28Mar2013.txt")
+data<- read.delim("sortIPMpack_9Feb2014.txt")
 
 #create site names
 sitenametable<-c("HonN",
@@ -80,7 +80,7 @@ data$sizeNext<-log(data$asizeNext)
 #data$lnpsizeNext <-log(data$psizeNext)
 #data$logsize<-log10(data$asize)
 #data$logasizeNext<-log10(data$asizeNext)
-data$size2<-(data$size^2)
+#data$size2<-(data$size^2)
 #data$sqrtsize<-(data$asize)^(1/2)
 #data$sqrtsizeNext<-(data$asizeNext)^(1/2)
 

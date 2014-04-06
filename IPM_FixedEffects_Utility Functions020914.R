@@ -48,27 +48,27 @@ p.fuseLG.x=function(x,params) {
 }
 
 #Fission offspring using separate vglm pospoisson function for hi vs lo number of fission products
-clo.yx=function(xp,x,params) {
-  nfiss<-exp(params[28,site]+params[29,site]*x)
+c.yx=function(xp,x,params) {
+  nfiss<-exp(params[25,site]+params[26,site]*x)
   ##return: prob of fission * 1-prob of lo number*number of fission products * prob that a fisser of size x prodcues a product of size xp
-  p.fiss.x(x,params)*nfiss*dunif(xp,min=-1.90896,max=max(x,-1.90897))
+  p.fiss.x(x,params)*nfiss*dunif(xp,min=-1.908971,max=x)
 }
 
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)
-clo.y=function(x,params) {
-  nfiss<-exp(params[28,site]+params[29,site]*x)
-  u=p.fiss.x(x,params)*p.hilo.x(x,params)*nfiss
+c.y=function(x,params) {
+  nfiss<-exp(params[25,site]+params[26,site]*x)
+  u=p.fiss.x(x,params)*nfiss
   return (u)
 }
 
 #recruitment = sexual offspring 
 
 f.yx=function(xp,x,params){
-  params[36,site]*x*dnorm(xp,params[34,site],params[35,site])
+  params[29,site]*x*dnorm(xp,params[27,site],params[28,site])
 }
 
 # recruits per adult for "constant correction" of fecundity matrix (no size distribution of offspring)
 f.y=function(xp,params) {
-  params[36,site]*xp
+  params[29,site]*xp
   
 }

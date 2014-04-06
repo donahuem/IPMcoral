@@ -1,0 +1,133 @@
+,Site,Depth..m.,Taxon,year,cover,trans,utrans,fyear,pcover,asinsqrt,Site1
+1,Honolua North,3,Montipora capitata,1999,1.568969002,Honolua North 3,Honolua.N,1999,0.01568969,0.125588372,Honolua
+61,Honolua North,3,Montipora capitata,2000,1.444761904,Honolua North 3,Honolua.N,2000,0.014447619,0.120489577,Honolua
+121,Honolua North,3,Montipora capitata,2001,2.253935586,Honolua North 3,Honolua.N,2001,0.022539356,0.150700904,Honolua
+181,Honolua North,3,Montipora capitata,2002,2.603921568,Honolua North 3,Honolua.N,2002,0.026039216,0.162075358,Honolua
+241,Honolua North,3,Montipora capitata,2003,1.045714286,Honolua North 3,Honolua.N,2003,0.010457143,0.102439241,Honolua
+301,Honolua North,3,Montipora capitata,2004,1.574545455,Honolua North 3,Honolua.N,2004,0.015745455,0.125812541,Honolua
+361,Honolua North,3,Montipora capitata,2005,1.12,Honolua North 3,Honolua.N,2005,0.0112,0.106028604,Honolua
+421,Honolua North,3,Montipora capitata,2006,1.2,Honolua North 3,Honolua.N,2006,0.012,0.109764792,Honolua
+481,Honolua North,3,Montipora capitata,2007,1.017575758,Honolua North 3,Honolua.N,2007,0.010175758,0.101046828,Honolua
+541,Honolua North,3,Montipora capitata,2008,2.122222222,Honolua North 3,Honolua.N,2008,0.021222222,0.146198743,Honolua
+601,Honolua North,3,Montipora capitata,2009,1.224149184,Honolua North 3,Honolua.N,2009,0.012241492,0.110868264,Honolua
+661,Honolua North,3,Montipora capitata,2010,1.906060606,Honolua North 3,Honolua.N,2010,0.019060606,0.138502544,Honolua
+721,Honolua North,3,Montipora capitata,2011,1.018787879,Honolua North 3,Honolua.N,2011,0.010187879,0.101107199,Honolua
+781,Honolua North,3,Montipora capitata,2012,1.648282828,Honolua North 3,Honolua.N,2012,0.016482828,0.128740802,Honolua
+7,Honolua South,3,Montipora capitata,1999,2.18384999,Honolua South 3,Honolua.S,1999,0.0218385,0.148321783,Honolua
+67,Honolua South,3,Montipora capitata,2000,3.133333334,Honolua South 3,Honolua.S,2000,0.031333333,0.17794992,Honolua
+127,Honolua South,3,Montipora capitata,2001,2.844051796,Honolua South 3,Honolua.S,2001,0.028440518,0.169452958,Honolua
+187,Honolua South,3,Montipora capitata,2002,2.825,Honolua South 3,Honolua.S,2002,0.02825,0.16887896,Honolua
+247,Honolua South,3,Montipora capitata,2003,2.026666667,Honolua South 3,Honolua.S,2003,0.020266667,0.142846346,Honolua
+307,Honolua South,3,Montipora capitata,2004,2.869090909,Honolua South 3,Honolua.S,2004,0.028690909,0.170204513,Honolua
+367,Honolua South,3,Montipora capitata,2005,2.56,Honolua South 3,Honolua.S,2005,0.0256,0.160690653,Honolua
+427,Honolua South,3,Montipora capitata,2006,1.68,Honolua South 3,Honolua.S,2006,0.0168,0.129980507,Honolua
+487,Honolua South,3,Montipora capitata,2007,0.96,Honolua South 3,Honolua.S,2007,0.0096,0.098137038,Honolua
+547,Honolua South,3,Montipora capitata,2008,1.444444444,Honolua South 3,Honolua.S,2008,0.014444444,0.120476274,Honolua
+607,Honolua South,3,Montipora capitata,2009,0.380792541,Honolua South 3,Honolua.S,2009,0.003807925,0.061747621,Honolua
+667,Honolua South,3,Montipora capitata,2010,0.352727273,Honolua South 3,Honolua.S,2010,0.003527273,0.059425817,Honolua
+727,Honolua South,3,Montipora capitata,2011,0.145454545,Honolua South 3,Honolua.S,2011,0.001454545,0.038147755,Honolua
+787,Honolua South,3,Montipora capitata,2012,0.556363636,Honolua South 3,Honolua.S,2012,0.005563636,0.074659126,Honolua
+13,Kahekili,3,Montipora capitata,1999,4.926244322,Kahekili 3,Kahekili.03m,1999,0.049262443,0.223815378,Kahekili
+19,Kahekili,7,Montipora capitata,1999,3.015229672,Kahekili 7,Kahekili.07m,1999,0.030152297,0.174528853,Kahekili
+133,Kahekili,3,Montipora capitata,2001,2.693333334,Kahekili 3,Kahekili.03m,2001,0.026933333,0.164859545,Kahekili
+139,Kahekili,7,Montipora capitata,2001,2.64,Kahekili 7,Kahekili.07m,2001,0.0264,0.163204313,Kahekili
+193,Kahekili,3,Montipora capitata,2002,3.32004902,Kahekili 3,Kahekili.03m,2002,0.03320049,0.183233628,Kahekili
+199,Kahekili,7,Montipora capitata,2002,2.915833334,Kahekili 7,Kahekili.07m,2002,0.029158333,0.171599032,Kahekili
+253,Kahekili,3,Montipora capitata,2003,3.013333333,Kahekili 3,Kahekili.03m,2003,0.030133333,0.174473398,Kahekili
+259,Kahekili,7,Montipora capitata,2003,3.84,Kahekili 7,Kahekili.07m,2003,0.0384,0.197235498,Kahekili
+313,Kahekili,3,Montipora capitata,2004,4.26969697,Kahekili 3,Kahekili.03m,2004,0.04269697,0.208131873,Kahekili
+319,Kahekili,7,Montipora capitata,2004,4.218787879,Kahekili 7,Kahekili.07m,2004,0.042187879,0.206869218,Kahekili
+373,Kahekili,3,Montipora capitata,2005,3.64,Kahekili 3,Kahekili.03m,2005,0.0364,0.191964667,Kahekili
+379,Kahekili,7,Montipora capitata,2005,3.16,Kahekili 7,Kahekili.07m,2005,0.0316,0.178713681,Kahekili
+433,Kahekili,3,Montipora capitata,2006,9.32,Kahekili 3,Kahekili.03m,2006,0.0932,0.310239541,Kahekili
+439,Kahekili,7,Montipora capitata,2006,3.32,Kahekili 7,Kahekili.07m,2006,0.0332,0.18323226,Kahekili
+493,Kahekili,3,Montipora capitata,2007,5.44969697,Kahekili 3,Kahekili.03m,2007,0.05449697,0.23561996,Kahekili
+499,Kahekili,7,Montipora capitata,2007,4.105454545,Kahekili 7,Kahekili.07m,2007,0.041054545,0.204031877,Kahekili
+553,Kahekili,3,Montipora capitata,2008,5.531515152,Kahekili 3,Kahekili.03m,2008,0.055315152,0.23741583,Kahekili
+613,Kahekili,3,Montipora capitata,2009,5.911919192,Kahekili 3,Kahekili.03m,2009,0.059119192,0.245606208,Kahekili
+619,Kahekili,7,Montipora capitata,2009,5.44,Kahekili 7,Kahekili.07m,2009,0.0544,0.235406276,Kahekili
+673,Kahekili,3,Montipora capitata,2010,4.992121212,Kahekili 3,Kahekili.03m,2010,0.049921212,0.225332587,Kahekili
+679,Kahekili,7,Montipora capitata,2010,5.393939394,Kahekili 7,Kahekili.07m,2010,0.053939394,0.23438882,Kahekili
+733,Kahekili,3,Montipora capitata,2011,6.04,Kahekili 3,Kahekili.03m,2011,0.0604,0.248307906,Kahekili
+739,Kahekili,7,Montipora capitata,2011,3.970909091,Kahekili 7,Kahekili.07m,2011,0.039709091,0.200614353,Kahekili
+793,Kahekili,3,Montipora capitata,2012,6.643636364,Kahekili 3,Kahekili.03m,2012,0.066436364,0.260695407,Kahekili
+799,Kahekili,7,Montipora capitata,2012,3.956363636,Kahekili 7,Kahekili.07m,2012,0.039563636,0.20024159,Kahekili
+85,Molokini,8,Montipora capitata,2000,16.75697712,Molokini 8,Molokini.07m,2000,0.167569771,0.421744668,Molokini
+91,Molokini,13,Montipora capitata,2000,43.74444444,Molokini 13,Molokini.13m,2000,0.437444444,0.722678253,Molokini
+145,Molokini,8,Montipora capitata,2001,14.13333333,Molokini 8,Molokini.07m,2001,0.141333333,0.385414495,Molokini
+151,Molokini,13,Montipora capitata,2001,38.28,Molokini 13,Molokini.13m,2001,0.3828,0.6670975,Molokini
+205,Molokini,8,Montipora capitata,2002,17.51666667,Molokini 8,Molokini.07m,2002,0.175166667,0.431825221,Molokini
+211,Molokini,13,Montipora capitata,2002,42.48,Molokini 13,Molokini.13m,2002,0.4248,0.709911732,Molokini
+265,Molokini,8,Montipora capitata,2003,23.10252101,Molokini 8,Molokini.07m,2003,0.23102521,0.501396733,Molokini
+271,Molokini,13,Montipora capitata,2003,51.44784314,Molokini 13,Molokini.13m,2003,0.514478431,0.799878619,Molokini
+325,Molokini,8,Montipora capitata,2004,19.47272727,Molokini 8,Molokini.07m,2004,0.194727273,0.457023598,Molokini
+331,Molokini,13,Montipora capitata,2004,49.41212121,Molokini 13,Molokini.13m,2004,0.494121212,0.77951924,Molokini
+385,Molokini,8,Montipora capitata,2005,22.68,Molokini 8,Molokini.07m,2005,0.2268,0.496368264,Molokini
+391,Molokini,13,Montipora capitata,2005,56.31111111,Molokini 13,Molokini.13m,2005,0.563111111,0.848678069,Molokini
+445,Molokini,8,Montipora capitata,2006,27.48444444,Molokini 8,Molokini.07m,2006,0.274844444,0.55184129,Molokini
+451,Molokini,13,Montipora capitata,2006,53.34383838,Molokini 13,Molokini.13m,2006,0.533438384,0.818861523,Molokini
+505,Molokini,8,Montipora capitata,2007,21.43636364,Molokini 8,Molokini.07m,2007,0.214363636,0.481370319,Molokini
+511,Molokini,13,Montipora capitata,2007,57.63111111,Molokini 13,Molokini.13m,2007,0.576311111,0.862008683,Molokini
+565,Molokini,8,Montipora capitata,2008,22.70181818,Molokini 8,Molokini.07m,2008,0.227018182,0.496628728,Molokini
+571,Molokini,13,Montipora capitata,2008,59.54909091,Molokini 13,Molokini.13m,2008,0.595490909,0.881479303,Molokini
+625,Molokini,8,Montipora capitata,2009,22.87132867,Molokini 8,Molokini.07m,2009,0.228713287,0.498649333,Molokini
+631,Molokini,13,Montipora capitata,2009,59.66666667,Molokini 13,Molokini.13m,2009,0.596666667,0.882677388,Molokini
+685,Molokini,8,Montipora capitata,2010,21.7,Molokini 8,Molokini.07m,2010,0.217,0.484575291,Molokini
+691,Molokini,13,Montipora capitata,2010,60.16060606,Molokini 13,Molokini.13m,2010,0.601606061,0.887716854,Molokini
+745,Molokini,8,Montipora capitata,2011,22.77575758,Molokini 8,Molokini.07m,2011,0.227757576,0.497510755,Molokini
+751,Molokini,13,Montipora capitata,2011,52.03515152,Molokini 13,Molokini.13m,2011,0.520351515,0.805755302,Molokini
+805,Molokini,8,Montipora capitata,2012,18.60032634,Molokini 8,Molokini.07m,2012,0.186003263,0.445912082,Molokini
+811,Molokini,13,Montipora capitata,2012,51.71515152,Molokini 13,Molokini.13m,2012,0.517151515,0.802553044,Molokini
+37,Olowalu,3,Montipora capitata,1999,6.514052902,Olowalu 3,Olowalu.03m,1999,0.065140529,0.258081879,Olowalu
+43,Olowalu,7,Montipora capitata,1999,21.04755522,Olowalu 7,Olowalu.07m,1999,0.210475552,0.47661735,Olowalu
+97,Olowalu,3,Montipora capitata,2000,5.898333334,Olowalu 3,Olowalu.03m,2000,0.058983333,0.245318031,Olowalu
+103,Olowalu,7,Montipora capitata,2000,20.34921568,Olowalu 7,Olowalu.07m,2000,0.203492157,0.467998661,Olowalu
+157,Olowalu,3,Montipora capitata,2001,6.386666666,Olowalu 3,Olowalu.03m,2001,0.063866667,0.255488986,Olowalu
+163,Olowalu,7,Montipora capitata,2001,17.52,Olowalu 7,Olowalu.07m,2001,0.1752,0.431869067,Olowalu
+217,Olowalu,3,Montipora capitata,2002,8.076388888,Olowalu 3,Olowalu.03m,2002,0.080763889,0.288161365,Olowalu
+223,Olowalu,7,Montipora capitata,2002,19.50382353,Olowalu 7,Olowalu.07m,2002,0.195038235,0.457416119,Olowalu
+277,Olowalu,3,Montipora capitata,2003,4.96,Olowalu 3,Olowalu.03m,2003,0.0496,0.224593997,Olowalu
+283,Olowalu,7,Montipora capitata,2003,22.08,Olowalu 7,Olowalu.07m,2003,0.2208,0.489170244,Olowalu
+337,Olowalu,3,Montipora capitata,2004,7.52,Olowalu 3,Olowalu.03m,2004,0.0752,0.277784947,Olowalu
+343,Olowalu,7,Montipora capitata,2004,19.58909091,Olowalu 7,Olowalu.07m,2004,0.195890909,0.458491213,Olowalu
+397,Olowalu,3,Montipora capitata,2005,4.36,Olowalu 3,Olowalu.03m,2005,0.0436,0.210354021,Olowalu
+403,Olowalu,7,Montipora capitata,2005,21.92888889,Olowalu 7,Olowalu.07m,2005,0.219288889,0.487346445,Olowalu
+457,Olowalu,3,Montipora capitata,2006,6.32,Olowalu 3,Olowalu.03m,2006,0.0632,0.254122412,Olowalu
+463,Olowalu,7,Montipora capitata,2006,22.96,Olowalu 7,Olowalu.07m,2006,0.2296,0.499704215,Olowalu
+517,Olowalu,3,Montipora capitata,2007,5.461818182,Olowalu 3,Olowalu.03m,2007,0.054618182,0.235886812,Olowalu
+523,Olowalu,7,Montipora capitata,2007,23.24,Olowalu 7,Olowalu.07m,2007,0.2324,0.503025917,Olowalu
+577,Olowalu,3,Montipora capitata,2008,4.052727273,Olowalu 3,Olowalu.03m,2008,0.040527273,0.202699064,Olowalu
+583,Olowalu,7,Montipora capitata,2008,23.15857032,Olowalu 7,Olowalu.07m,2008,0.231585703,0.502061349,Olowalu
+637,Olowalu,3,Montipora capitata,2009,4.281010101,Olowalu 3,Olowalu.03m,2009,0.042810101,0.208411484,Olowalu
+643,Olowalu,7,Montipora capitata,2009,20.15535354,Olowalu 7,Olowalu.07m,2009,0.201553535,0.465586713,Olowalu
+697,Olowalu,3,Montipora capitata,2010,3.793240093,Olowalu 3,Olowalu.03m,2010,0.037932401,0.196015228,Olowalu
+703,Olowalu,7,Montipora capitata,2010,22.65757576,Olowalu 7,Olowalu.07m,2010,0.226575758,0.496100473,Olowalu
+757,Olowalu,3,Montipora capitata,2011,5.103216783,Olowalu 3,Olowalu.03m,2011,0.051032168,0.227869904,Olowalu
+763,Olowalu,7,Montipora capitata,2011,18.59515152,Olowalu 7,Olowalu.07m,2011,0.185951515,0.445845583,Olowalu
+817,Olowalu,3,Montipora capitata,2012,4.128340548,Olowalu 3,Olowalu.03m,2012,0.041283405,0.204607826,Olowalu
+823,Olowalu,7,Montipora capitata,2012,17.09757576,Olowalu 7,Olowalu.07m,2012,0.170975758,0.426286124,Olowalu
+49,Papaula Pt.,10,Montipora capitata,1999,8.009122808,Papaula Pt. 10,Papaula.10m,1999,0.080091228,0.286924644,Papaula Pt.
+109,Papaula Pt.,10,Montipora capitata,2000,7.94074074,Papaula Pt. 10,Papaula.10m,2000,0.079407407,0.285662536,Papaula Pt.
+169,Papaula Pt.,10,Montipora capitata,2001,7.68,Papaula Pt. 10,Papaula.10m,2001,0.0768,0.280803877,Papaula Pt.
+229,Papaula Pt.,10,Montipora capitata,2002,8.48006536,Papaula Pt. 10,Papaula.10m,2002,0.084800654,0.295486728,Papaula Pt.
+289,Papaula Pt.,10,Montipora capitata,2003,8.473015873,Papaula Pt. 10,Papaula.10m,2003,0.084730159,0.295360181,Papaula Pt.
+349,Papaula Pt.,10,Montipora capitata,2004,8.772727273,Papaula Pt. 10,Papaula.10m,2004,0.087727273,0.300698986,Papaula Pt.
+469,Papaula Pt.,10,Montipora capitata,2006,8.36,Papaula Pt. 10,Papaula.10m,2006,0.0836,0.29332484,Papaula Pt.
+529,Papaula Pt.,10,Montipora capitata,2007,8.64,Papaula Pt. 10,Papaula.10m,2007,0.0864,0.298345051,Papaula Pt.
+589,Papaula Pt.,10,Montipora capitata,2008,3.730909091,Papaula Pt. 10,Papaula.10m,2008,0.037309091,0.194377314,Papaula Pt.
+649,Papaula Pt.,10,Montipora capitata,2009,2.620606061,Papaula Pt. 10,Papaula.10m,2009,0.026206061,0.162598383,Papaula Pt.
+709,Papaula Pt.,10,Montipora capitata,2010,2.017489177,Papaula Pt. 10,Papaula.10m,2010,0.020174892,0.142520336,Papaula Pt.
+769,Papaula Pt.,10,Montipora capitata,2011,1.665454545,Papaula Pt. 10,Papaula.10m,2011,0.016654545,0.129413421,Papaula Pt.
+829,Papaula Pt.,10,Montipora capitata,2012,1.386060606,Papaula Pt. 10,Papaula.10m,2012,0.013860606,0.118004756,Papaula Pt.
+55,Puamana,3,Montipora capitata,1999,0.235643324,Puamana 3,Puamana.03m,1999,0.002356433,0.048562192,Puamana
+115,Puamana,3,Montipora capitata,2000,0.680873016,Puamana 3,Puamana.03m,2000,0.00680873,0.082608955,Puamana
+175,Puamana,3,Montipora capitata,2001,0.970003798,Puamana 3,Puamana.03m,2001,0.009700038,0.098648694,Puamana
+235,Puamana,3,Montipora capitata,2002,0.940571896,Puamana 3,Puamana.03m,2002,0.009405719,0.097135766,Puamana
+295,Puamana,3,Montipora capitata,2003,0.213333333,Puamana 3,Puamana.03m,2003,0.002133333,0.04620446,Puamana
+355,Puamana,3,Montipora capitata,2004,0.156363636,Puamana 3,Puamana.03m,2004,0.001563636,0.039553154,Puamana
+475,Puamana,3,Montipora capitata,2006,0.04,Puamana 3,Puamana.03m,2006,4.00E-04,0.020001334,Puamana
+595,Puamana,3,Montipora capitata,2008,0.556363636,Puamana 3,Puamana.03m,2008,0.005563636,0.074659126,Puamana
+655,Puamana,3,Montipora capitata,2009,0.258181818,Puamana 3,Puamana.03m,2009,0.002581818,0.050833485,Puamana
+715,Puamana,3,Montipora capitata,2010,0.106060606,Puamana 3,Puamana.03m,2010,0.001060606,0.032572707,Puamana
+775,Puamana,3,Montipora capitata,2011,0.258181818,Puamana 3,Puamana.03m,2011,0.002581818,0.050833485,Puamana
+835,Puamana,3,Montipora capitata,2012,0.036363636,Puamana 3,Puamana.03m,2012,0.000363636,0.019070408,Puamana
