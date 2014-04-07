@@ -1,0 +1,841 @@
+Site,Depth (m),Taxon,year,cover
+Honolua North,3,Montipora capitata,1999,1.568969002
+Honolua North,3,Montipora flabellata,1999,1.253285804
+Honolua North,3,Montipora patula,1999,1.198192482
+Honolua North,3,Pocillopora meandrina,1999,0.69833187
+Honolua North,3,Porites compressa,1999,0.80123753
+Honolua North,3,Porites lobata,1999,8.59006723
+Honolua South,3,Montipora capitata,1999,2.18384999
+Honolua South,3,Montipora flabellata,1999,9.658186994
+Honolua South,3,Montipora patula,1999,2.891009788
+Honolua South,3,Pocillopora meandrina,1999,1.615114812
+Honolua South,3,Porites compressa,1999,0.192229438
+Honolua South,3,Porites lobata,1999,3.552528704
+Kahekili,3,Montipora capitata,1999,4.926244322
+Kahekili,3,Montipora flabellata,1999,0.19933257
+Kahekili,3,Montipora patula,1999,2.370443602
+Kahekili,3,Pocillopora meandrina,1999,1.966873764
+Kahekili,3,Porites compressa,1999,11.02485791
+Kahekili,3,Porites lobata,1999,22.83383948
+Kahekili,7,Montipora capitata,1999,3.015229672
+Kahekili,7,Montipora flabellata,1999,0
+Kahekili,7,Montipora patula,1999,0.293239026
+Kahekili,7,Pocillopora meandrina,1999,0.837534056
+Kahekili,7,Porites compressa,1999,7.187133484
+Kahekili,7,Porites lobata,1999,18.82374177
+Molokini,8,Montipora capitata,1999,
+Molokini,8,Montipora flabellata,1999,
+Molokini,8,Montipora patula,1999,
+Molokini,8,Pocillopora meandrina,1999,
+Molokini,8,Porites compressa,1999,
+Molokini,8,Porites lobata,1999,
+Molokini,13,Montipora capitata,1999,
+Molokini,13,Montipora flabellata,1999,
+Molokini,13,Montipora patula,1999,
+Molokini,13,Pocillopora meandrina,1999,
+Molokini,13,Porites compressa,1999,
+Molokini,13,Porites lobata,1999,
+Olowalu,3,Montipora capitata,1999,6.514052902
+Olowalu,3,Montipora flabellata,1999,0
+Olowalu,3,Montipora patula,1999,2.514531426
+Olowalu,3,Pocillopora meandrina,1999,0.753944912
+Olowalu,3,Porites compressa,1999,4.037815126
+Olowalu,3,Porites lobata,1999,6.065904344
+Olowalu,7,Montipora capitata,1999,21.04755522
+Olowalu,7,Montipora flabellata,1999,0
+Olowalu,7,Montipora patula,1999,15.12653501
+Olowalu,7,Pocillopora meandrina,1999,1.697457218
+Olowalu,7,Porites compressa,1999,1.605014942
+Olowalu,7,Porites lobata,1999,15.50431635
+Papaula Pt.,10,Montipora capitata,1999,8.009122808
+Papaula Pt.,10,Montipora flabellata,1999,28.25353802
+Papaula Pt.,10,Montipora patula,1999,4.408274854
+Papaula Pt.,10,Pocillopora meandrina,1999,0.419649122
+Papaula Pt.,10,Porites compressa,1999,0.011111112
+Papaula Pt.,10,Porites lobata,1999,8.353011696
+Puamana,3,Montipora capitata,1999,0.235643324
+Puamana,3,Montipora flabellata,1999,0
+Puamana,3,Montipora patula,1999,0.596477494
+Puamana,3,Pocillopora meandrina,1999,8.570506654
+Puamana,3,Porites compressa,1999,0.210064556
+Puamana,3,Porites lobata,1999,5.115292622
+Honolua North,3,Montipora capitata,2000,1.444761904
+Honolua North,3,Montipora flabellata,2000,0.866666666
+Honolua North,3,Montipora patula,2000,1.772380952
+Honolua North,3,Pocillopora meandrina,2000,0.506666666
+Honolua North,3,Porites compressa,2000,0.608571428
+Honolua North,3,Porites lobata,2000,7.908571428
+Honolua South,3,Montipora capitata,2000,3.133333334
+Honolua South,3,Montipora flabellata,2000,9.493333334
+Honolua South,3,Montipora patula,2000,4.106666666
+Honolua South,3,Pocillopora meandrina,2000,1.586666666
+Honolua South,3,Porites compressa,2000,0.373333334
+Honolua South,3,Porites lobata,2000,3.573333334
+Kahekili,3,Montipora capitata,2000,
+Kahekili,3,Montipora flabellata,2000,
+Kahekili,3,Montipora patula,2000,
+Kahekili,3,Pocillopora meandrina,2000,
+Kahekili,3,Porites compressa,2000,
+Kahekili,3,Porites lobata,2000,
+Kahekili,7,Montipora capitata,2000,
+Kahekili,7,Montipora flabellata,2000,
+Kahekili,7,Montipora patula,2000,
+Kahekili,7,Pocillopora meandrina,2000,
+Kahekili,7,Porites compressa,2000,
+Kahekili,7,Porites lobata,2000,
+Molokini,8,Montipora capitata,2000,16.75697712
+Molokini,8,Montipora flabellata,2000,0.022222222
+Molokini,8,Montipora patula,2000,13.43661765
+Molokini,8,Pocillopora meandrina,2000,1.169883286
+Molokini,8,Porites compressa,2000,6.13181606
+Molokini,8,Porites lobata,2000,22.92927638
+Molokini,13,Montipora capitata,2000,43.74444444
+Molokini,13,Montipora flabellata,2000,0
+Molokini,13,Montipora patula,2000,32.94444444
+Molokini,13,Pocillopora meandrina,2000,0.888888888
+Molokini,13,Porites compressa,2000,5.4
+Molokini,13,Porites lobata,2000,4.5
+Olowalu,3,Montipora capitata,2000,5.898333334
+Olowalu,3,Montipora flabellata,2000,0
+Olowalu,3,Montipora patula,2000,2.848333334
+Olowalu,3,Pocillopora meandrina,2000,1.798333334
+Olowalu,3,Porites compressa,2000,3.8125
+Olowalu,3,Porites lobata,2000,7.053333334
+Olowalu,7,Montipora capitata,2000,20.34921568
+Olowalu,7,Montipora flabellata,2000,0
+Olowalu,7,Montipora patula,2000,15.45658497
+Olowalu,7,Pocillopora meandrina,2000,1.669607844
+Olowalu,7,Porites compressa,2000,1.273202614
+Olowalu,7,Porites lobata,2000,14.42895425
+Papaula Pt.,10,Montipora capitata,2000,7.94074074
+Papaula Pt.,10,Montipora flabellata,2000,29.12592592
+Papaula Pt.,10,Montipora patula,2000,3.422222222
+Papaula Pt.,10,Pocillopora meandrina,2000,0.622222222
+Papaula Pt.,10,Porites compressa,2000,0.518518518
+Papaula Pt.,10,Porites lobata,2000,4.311111112
+Puamana,3,Montipora capitata,2000,0.680873016
+Puamana,3,Montipora flabellata,2000,0
+Puamana,3,Montipora patula,2000,0.991746032
+Puamana,3,Pocillopora meandrina,2000,8.330833334
+Puamana,3,Porites compressa,2000,0.455396826
+Puamana,3,Porites lobata,2000,6.427301588
+Honolua North,3,Montipora capitata,2001,2.253935586
+Honolua North,3,Montipora flabellata,2001,0.767460374
+Honolua North,3,Montipora patula,2001,1.301115758
+Honolua North,3,Pocillopora meandrina,2001,0.437834784
+Honolua North,3,Porites compressa,2001,0.844271162
+Honolua North,3,Porites lobata,2001,6.196911396
+Honolua South,3,Montipora capitata,2001,2.844051796
+Honolua South,3,Montipora flabellata,2001,9.289005848
+Honolua South,3,Montipora patula,2001,2.782372598
+Honolua South,3,Pocillopora meandrina,2001,2.238855472
+Honolua South,3,Porites compressa,2001,0.307635756
+Honolua South,3,Porites lobata,2001,4.043784462
+Kahekili,3,Montipora capitata,2001,2.693333334
+Kahekili,3,Montipora flabellata,2001,0
+Kahekili,3,Montipora patula,2001,2.32
+Kahekili,3,Pocillopora meandrina,2001,1
+Kahekili,3,Porites compressa,2001,2.76
+Kahekili,3,Porites lobata,2001,20.49333334
+Kahekili,7,Montipora capitata,2001,2.64
+Kahekili,7,Montipora flabellata,2001,0.013333334
+Kahekili,7,Montipora patula,2001,0.386666666
+Kahekili,7,Pocillopora meandrina,2001,0.893333334
+Kahekili,7,Porites compressa,2001,1.68
+Kahekili,7,Porites lobata,2001,15.76
+Molokini,8,Montipora capitata,2001,14.13333333
+Molokini,8,Montipora flabellata,2001,0.026666666
+Molokini,8,Montipora patula,2001,15.05333333
+Molokini,8,Pocillopora meandrina,2001,1.28
+Molokini,8,Porites compressa,2001,4.04
+Molokini,8,Porites lobata,2001,18.29333333
+Molokini,13,Montipora capitata,2001,38.28
+Molokini,13,Montipora flabellata,2001,0
+Molokini,13,Montipora patula,2001,30.54666666
+Molokini,13,Pocillopora meandrina,2001,0.6
+Molokini,13,Porites compressa,2001,1.44
+Molokini,13,Porites lobata,2001,5.626666666
+Olowalu,3,Montipora capitata,2001,6.386666666
+Olowalu,3,Montipora flabellata,2001,0
+Olowalu,3,Montipora patula,2001,3
+Olowalu,3,Pocillopora meandrina,2001,1.266666666
+Olowalu,3,Porites compressa,2001,3.413333334
+Olowalu,3,Porites lobata,2001,5.093333334
+Olowalu,7,Montipora capitata,2001,17.52
+Olowalu,7,Montipora flabellata,2001,0
+Olowalu,7,Montipora patula,2001,16.48
+Olowalu,7,Pocillopora meandrina,2001,1.4
+Olowalu,7,Porites compressa,2001,1.92
+Olowalu,7,Porites lobata,2001,15.05333333
+Papaula Pt.,10,Montipora capitata,2001,7.68
+Papaula Pt.,10,Montipora flabellata,2001,28.01333334
+Papaula Pt.,10,Montipora patula,2001,3
+Papaula Pt.,10,Pocillopora meandrina,2001,0.64
+Papaula Pt.,10,Porites compressa,2001,0.186666666
+Papaula Pt.,10,Porites lobata,2001,4.28
+Puamana,3,Montipora capitata,2001,0.970003798
+Puamana,3,Montipora flabellata,2001,0.011111112
+Puamana,3,Montipora patula,2001,1.092661958
+Puamana,3,Pocillopora meandrina,2001,6.010551378
+Puamana,3,Porites compressa,2001,0.128462824
+Puamana,3,Porites lobata,2001,7.158036758
+Honolua North,3,Montipora capitata,2002,2.603921568
+Honolua North,3,Montipora flabellata,2002,0.839215686
+Honolua North,3,Montipora patula,2002,1.487058824
+Honolua North,3,Pocillopora meandrina,2002,1.130196078
+Honolua North,3,Porites compressa,2002,0.522352942
+Honolua North,3,Porites lobata,2002,6.410980392
+Honolua South,3,Montipora capitata,2002,2.825
+Honolua South,3,Montipora flabellata,2002,9.890833334
+Honolua South,3,Montipora patula,2002,3.92
+Honolua South,3,Pocillopora meandrina,2002,1.8125
+Honolua South,3,Porites compressa,2002,0.233333334
+Honolua South,3,Porites lobata,2002,3.651666666
+Kahekili,3,Montipora capitata,2002,3.32004902
+Kahekili,3,Montipora flabellata,2002,0
+Kahekili,3,Montipora patula,2002,2.264068628
+Kahekili,3,Pocillopora meandrina,2002,0.65754902
+Kahekili,3,Porites compressa,2002,2.96004902
+Kahekili,3,Porites lobata,2002,23.3237255
+Kahekili,7,Montipora capitata,2002,2.915833334
+Kahekili,7,Montipora flabellata,2002,0
+Kahekili,7,Montipora patula,2002,0.265833334
+Kahekili,7,Pocillopora meandrina,2002,0.306666666
+Kahekili,7,Porites compressa,2002,1.813333334
+Kahekili,7,Porites lobata,2002,15.9125
+Molokini,8,Montipora capitata,2002,17.51666667
+Molokini,8,Montipora flabellata,2002,0
+Molokini,8,Montipora patula,2002,16.02333333
+Molokini,8,Pocillopora meandrina,2002,1.406666666
+Molokini,8,Porites compressa,2002,3.388333334
+Molokini,8,Porites lobata,2002,20.515
+Molokini,13,Montipora capitata,2002,42.48
+Molokini,13,Montipora flabellata,2002,0.026666666
+Molokini,13,Montipora patula,2002,34.8
+Molokini,13,Pocillopora meandrina,2002,0.946666666
+Molokini,13,Porites compressa,2002,0.826666666
+Molokini,13,Porites lobata,2002,3.253333334
+Olowalu,3,Montipora capitata,2002,8.076388888
+Olowalu,3,Montipora flabellata,2002,0
+Olowalu,3,Montipora patula,2002,1.836111112
+Olowalu,3,Pocillopora meandrina,2002,1.790277778
+Olowalu,3,Porites compressa,2002,3.625
+Olowalu,3,Porites lobata,2002,4.816666666
+Olowalu,7,Montipora capitata,2002,19.50382353
+Olowalu,7,Montipora flabellata,2002,0
+Olowalu,7,Montipora patula,2002,14.10058824
+Olowalu,7,Pocillopora meandrina,2002,1.455637254
+Olowalu,7,Porites compressa,2002,1.226666666
+Olowalu,7,Porites lobata,2002,14.17147059
+Papaula Pt.,10,Montipora capitata,2002,8.48006536
+Papaula Pt.,10,Montipora flabellata,2002,35.26821896
+Papaula Pt.,10,Montipora patula,2002,5.110294118
+Papaula Pt.,10,Pocillopora meandrina,2002,0.573202614
+Papaula Pt.,10,Porites compressa,2002,0.18251634
+Papaula Pt.,10,Porites lobata,2002,3.732679738
+Puamana,3,Montipora capitata,2002,0.940571896
+Puamana,3,Montipora flabellata,2002,0
+Puamana,3,Montipora patula,2002,1.089444444
+Puamana,3,Pocillopora meandrina,2002,4.96635621
+Puamana,3,Porites compressa,2002,0.145310458
+Puamana,3,Porites lobata,2002,5.827990196
+Honolua North,3,Montipora capitata,2003,1.045714286
+Honolua North,3,Montipora flabellata,2003,0.860952381
+Honolua North,3,Montipora patula,2003,0.453333333
+Honolua North,3,Pocillopora meandrina,2003,0.426666667
+Honolua North,3,Porites compressa,2003,0.08
+Honolua North,3,Porites lobata,2003,5.504761905
+Honolua South,3,Montipora capitata,2003,2.026666667
+Honolua South,3,Montipora flabellata,2003,11.44
+Honolua South,3,Montipora patula,2003,1.866666667
+Honolua South,3,Pocillopora meandrina,2003,2
+Honolua South,3,Porites compressa,2003,0
+Honolua South,3,Porites lobata,2003,3.653333333
+Kahekili,3,Montipora capitata,2003,3.013333333
+Kahekili,3,Montipora flabellata,2003,0
+Kahekili,3,Montipora patula,2003,3.106666667
+Kahekili,3,Pocillopora meandrina,2003,1.16
+Kahekili,3,Porites compressa,2003,3.746666667
+Kahekili,3,Porites lobata,2003,20.34666667
+Kahekili,7,Montipora capitata,2003,3.84
+Kahekili,7,Montipora flabellata,2003,0
+Kahekili,7,Montipora patula,2003,0.8
+Kahekili,7,Pocillopora meandrina,2003,0.213333333
+Kahekili,7,Porites compressa,2003,2.56
+Kahekili,7,Porites lobata,2003,16.25333333
+Molokini,8,Montipora capitata,2003,23.10252101
+Molokini,8,Montipora flabellata,2003,0.013333333
+Molokini,8,Montipora patula,2003,21.96291317
+Molokini,8,Pocillopora meandrina,2003,1.670252101
+Molokini,8,Porites compressa,2003,7.094229692
+Molokini,8,Porites lobata,2003,19.37221289
+Molokini,13,Montipora capitata,2003,51.44784314
+Molokini,13,Montipora flabellata,2003,0
+Molokini,13,Montipora patula,2003,34.31137255
+Molokini,13,Pocillopora meandrina,2003,0.887058824
+Molokini,13,Porites compressa,2003,1.349019608
+Molokini,13,Porites lobata,2003,2.900392157
+Olowalu,3,Montipora capitata,2003,4.96
+Olowalu,3,Montipora flabellata,2003,0
+Olowalu,3,Montipora patula,2003,1.84
+Olowalu,3,Pocillopora meandrina,2003,1.226666667
+Olowalu,3,Porites compressa,2003,2.213333333
+Olowalu,3,Porites lobata,2003,5.093333333
+Olowalu,7,Montipora capitata,2003,22.08
+Olowalu,7,Montipora flabellata,2003,0
+Olowalu,7,Montipora patula,2003,12.58666667
+Olowalu,7,Pocillopora meandrina,2003,1.386666667
+Olowalu,7,Porites compressa,2003,0.266666667
+Olowalu,7,Porites lobata,2003,14.37333333
+Papaula Pt.,10,Montipora capitata,2003,8.473015873
+Papaula Pt.,10,Montipora flabellata,2003,40.87407407
+Papaula Pt.,10,Montipora patula,2003,3.443386243
+Papaula Pt.,10,Pocillopora meandrina,2003,0.459259259
+Papaula Pt.,10,Porites compressa,2003,0.42962963
+Papaula Pt.,10,Porites lobata,2003,4.486772487
+Puamana,3,Montipora capitata,2003,0.213333333
+Puamana,3,Montipora flabellata,2003,0
+Puamana,3,Montipora patula,2003,0
+Puamana,3,Pocillopora meandrina,2003,2.48
+Puamana,3,Porites compressa,2003,0
+Puamana,3,Porites lobata,2003,6.106666667
+Honolua North,3,Montipora capitata,2004,1.574545455
+Honolua North,3,Montipora flabellata,2004,1.498181818
+Honolua North,3,Montipora patula,2004,0.472727273
+Honolua North,3,Pocillopora meandrina,2004,0.276363636
+Honolua North,3,Porites compressa,2004,0.338181818
+Honolua North,3,Porites lobata,2004,5.109090909
+Honolua South,3,Montipora capitata,2004,2.869090909
+Honolua South,3,Montipora flabellata,2004,9.259393939
+Honolua South,3,Montipora patula,2004,4.526060606
+Honolua South,3,Pocillopora meandrina,2004,0.818989899
+Honolua South,3,Porites compressa,2004,0
+Honolua South,3,Porites lobata,2004,4.53979798
+Kahekili,3,Montipora capitata,2004,4.26969697
+Kahekili,3,Montipora flabellata,2004,0
+Kahekili,3,Montipora patula,2004,3.924475524
+Kahekili,3,Pocillopora meandrina,2004,0.905827506
+Kahekili,3,Porites compressa,2004,1.276223776
+Kahekili,3,Porites lobata,2004,24.7027972
+Kahekili,7,Montipora capitata,2004,4.218787879
+Kahekili,7,Montipora flabellata,2004,0
+Kahekili,7,Montipora patula,2004,0.604242424
+Kahekili,7,Pocillopora meandrina,2004,0.284848485
+Kahekili,7,Porites compressa,2004,1.633333333
+Kahekili,7,Porites lobata,2004,22.10060606
+Molokini,8,Montipora capitata,2004,19.47272727
+Molokini,8,Montipora flabellata,2004,0
+Molokini,8,Montipora patula,2004,16.32424242
+Molokini,8,Pocillopora meandrina,2004,2.36969697
+Molokini,8,Porites compressa,2004,2.327272727
+Molokini,8,Porites lobata,2004,23.26363636
+Molokini,13,Montipora capitata,2004,49.41212121
+Molokini,13,Montipora flabellata,2004,0.1
+Molokini,13,Montipora patula,2004,29.30909091
+Molokini,13,Pocillopora meandrina,2004,1.293939394
+Molokini,13,Porites compressa,2004,0.072727273
+Molokini,13,Porites lobata,2004,3.121212121
+Olowalu,3,Montipora capitata,2004,7.52
+Olowalu,3,Montipora flabellata,2004,0
+Olowalu,3,Montipora patula,2004,2.6
+Olowalu,3,Pocillopora meandrina,2004,0.44
+Olowalu,3,Porites compressa,2004,0.2
+Olowalu,3,Porites lobata,2004,9.52
+Olowalu,7,Montipora capitata,2004,19.58909091
+Olowalu,7,Montipora flabellata,2004,0.16
+Olowalu,7,Montipora patula,2004,12.73818182
+Olowalu,7,Pocillopora meandrina,2004,1.010909091
+Olowalu,7,Porites compressa,2004,0
+Olowalu,7,Porites lobata,2004,18.20727273
+Papaula Pt.,10,Montipora capitata,2004,8.772727273
+Papaula Pt.,10,Montipora flabellata,2004,33.05151515
+Papaula Pt.,10,Montipora patula,2004,2.476363636
+Papaula Pt.,10,Pocillopora meandrina,2004,0.906060606
+Papaula Pt.,10,Porites compressa,2004,0.427272727
+Papaula Pt.,10,Porites lobata,2004,4.221212121
+Puamana,3,Montipora capitata,2004,0.156363636
+Puamana,3,Montipora flabellata,2004,0
+Puamana,3,Montipora patula,2004,0.08
+Puamana,3,Pocillopora meandrina,2004,1.738181818
+Puamana,3,Porites compressa,2004,0
+Puamana,3,Porites lobata,2004,6.774545455
+Honolua North,3,Montipora capitata,2005,1.12
+Honolua North,3,Montipora flabellata,2005,0
+Honolua North,3,Montipora patula,2005,0.6
+Honolua North,3,Pocillopora meandrina,2005,0.68
+Honolua North,3,Porites compressa,2005,0
+Honolua North,3,Porites lobata,2005,4.84
+Honolua South,3,Montipora capitata,2005,2.56
+Honolua South,3,Montipora flabellata,2005,0.52
+Honolua South,3,Montipora patula,2005,1.68
+Honolua South,3,Pocillopora meandrina,2005,1.16
+Honolua South,3,Porites compressa,2005,0
+Honolua South,3,Porites lobata,2005,3.56
+Kahekili,3,Montipora capitata,2005,3.64
+Kahekili,3,Montipora flabellata,2005,0
+Kahekili,3,Montipora patula,2005,2.64
+Kahekili,3,Pocillopora meandrina,2005,1.28
+Kahekili,3,Porites compressa,2005,0
+Kahekili,3,Porites lobata,2005,21.24
+Kahekili,7,Montipora capitata,2005,3.16
+Kahekili,7,Montipora flabellata,2005,0
+Kahekili,7,Montipora patula,2005,0.8
+Kahekili,7,Pocillopora meandrina,2005,0.32
+Kahekili,7,Porites compressa,2005,1.12
+Kahekili,7,Porites lobata,2005,18.76
+Molokini,8,Montipora capitata,2005,22.68
+Molokini,8,Montipora flabellata,2005,0
+Molokini,8,Montipora patula,2005,14.8
+Molokini,8,Pocillopora meandrina,2005,1.76
+Molokini,8,Porites compressa,2005,1.56
+Molokini,8,Porites lobata,2005,23
+Molokini,13,Montipora capitata,2005,56.31111111
+Molokini,13,Montipora flabellata,2005,0
+Molokini,13,Montipora patula,2005,23.06666667
+Molokini,13,Pocillopora meandrina,2005,0.488888889
+Molokini,13,Porites compressa,2005,0.133333333
+Molokini,13,Porites lobata,2005,2.488888889
+Olowalu,3,Montipora capitata,2005,4.36
+Olowalu,3,Montipora flabellata,2005,0
+Olowalu,3,Montipora patula,2005,2.12
+Olowalu,3,Pocillopora meandrina,2005,0.6
+Olowalu,3,Porites compressa,2005,0
+Olowalu,3,Porites lobata,2005,8.8
+Olowalu,7,Montipora capitata,2005,21.92888889
+Olowalu,7,Montipora flabellata,2005,0
+Olowalu,7,Montipora patula,2005,13.28
+Olowalu,7,Pocillopora meandrina,2005,1.484444444
+Olowalu,7,Porites compressa,2005,0.12
+Olowalu,7,Porites lobata,2005,14.28888889
+Papaula Pt.,10,Montipora capitata,2005,
+Papaula Pt.,10,Montipora flabellata,2005,
+Papaula Pt.,10,Montipora patula,2005,
+Papaula Pt.,10,Pocillopora meandrina,2005,
+Papaula Pt.,10,Porites compressa,2005,
+Papaula Pt.,10,Porites lobata,2005,
+Puamana,3,Montipora capitata,2005,
+Puamana,3,Montipora flabellata,2005,
+Puamana,3,Montipora patula,2005,
+Puamana,3,Pocillopora meandrina,2005,
+Puamana,3,Porites compressa,2005,
+Puamana,3,Porites lobata,2005,
+Honolua North,3,Montipora capitata,2006,1.2
+Honolua North,3,Montipora flabellata,2006,0.08
+Honolua North,3,Montipora patula,2006,0.68
+Honolua North,3,Pocillopora meandrina,2006,0.6
+Honolua North,3,Porites compressa,2006,0
+Honolua North,3,Porites lobata,2006,6.16
+Honolua South,3,Montipora capitata,2006,1.68
+Honolua South,3,Montipora flabellata,2006,0
+Honolua South,3,Montipora patula,2006,1.52
+Honolua South,3,Pocillopora meandrina,2006,1.64
+Honolua South,3,Porites compressa,2006,0
+Honolua South,3,Porites lobata,2006,3.36
+Kahekili,3,Montipora capitata,2006,9.32
+Kahekili,3,Montipora flabellata,2006,0
+Kahekili,3,Montipora patula,2006,2.16
+Kahekili,3,Pocillopora meandrina,2006,1.48
+Kahekili,3,Porites compressa,2006,0
+Kahekili,3,Porites lobata,2006,24.8
+Kahekili,7,Montipora capitata,2006,3.32
+Kahekili,7,Montipora flabellata,2006,0
+Kahekili,7,Montipora patula,2006,0.4
+Kahekili,7,Pocillopora meandrina,2006,0.44
+Kahekili,7,Porites compressa,2006,0.4
+Kahekili,7,Porites lobata,2006,26.04
+Molokini,8,Montipora capitata,2006,27.48444444
+Molokini,8,Montipora flabellata,2006,0
+Molokini,8,Montipora patula,2006,12.46222222
+Molokini,8,Pocillopora meandrina,2006,2.364444444
+Molokini,8,Porites compressa,2006,0.76
+Molokini,8,Porites lobata,2006,19.23111111
+Molokini,13,Montipora capitata,2006,53.34383838
+Molokini,13,Montipora flabellata,2006,0
+Molokini,13,Montipora patula,2006,23.21050505
+Molokini,13,Pocillopora meandrina,2006,1.354343434
+Molokini,13,Porites compressa,2006,0
+Molokini,13,Porites lobata,2006,2.34989899
+Olowalu,3,Montipora capitata,2006,6.32
+Olowalu,3,Montipora flabellata,2006,0
+Olowalu,3,Montipora patula,2006,2.76
+Olowalu,3,Pocillopora meandrina,2006,0.88
+Olowalu,3,Porites compressa,2006,0
+Olowalu,3,Porites lobata,2006,7.64
+Olowalu,7,Montipora capitata,2006,22.96
+Olowalu,7,Montipora flabellata,2006,0.08
+Olowalu,7,Montipora patula,2006,12.68
+Olowalu,7,Pocillopora meandrina,2006,1.4
+Olowalu,7,Porites compressa,2006,0
+Olowalu,7,Porites lobata,2006,15.76
+Papaula Pt.,10,Montipora capitata,2006,8.36
+Papaula Pt.,10,Montipora flabellata,2006,19.56
+Papaula Pt.,10,Montipora patula,2006,1.68
+Papaula Pt.,10,Pocillopora meandrina,2006,0.56
+Papaula Pt.,10,Porites compressa,2006,0.12
+Papaula Pt.,10,Porites lobata,2006,5.4
+Puamana,3,Montipora capitata,2006,0.04
+Puamana,3,Montipora flabellata,2006,0
+Puamana,3,Montipora patula,2006,0.088888889
+Puamana,3,Pocillopora meandrina,2006,2.288888889
+Puamana,3,Porites compressa,2006,0
+Puamana,3,Porites lobata,2006,7.568888889
+Honolua North,3,Montipora capitata,2007,1.017575758
+Honolua North,3,Montipora flabellata,2007,0.08
+Honolua North,3,Montipora patula,2007,0.935431235
+Honolua North,3,Pocillopora meandrina,2007,0.941818182
+Honolua North,3,Porites compressa,2007,0
+Honolua North,3,Porites lobata,2007,4.412913753
+Honolua South,3,Montipora capitata,2007,0.96
+Honolua South,3,Montipora flabellata,2007,0.385454545
+Honolua South,3,Montipora patula,2007,2.083636364
+Honolua South,3,Pocillopora meandrina,2007,1.436363636
+Honolua South,3,Porites compressa,2007,0
+Honolua South,3,Porites lobata,2007,3.865454545
+Kahekili,3,Montipora capitata,2007,5.44969697
+Kahekili,3,Montipora flabellata,2007,0
+Kahekili,3,Montipora patula,2007,3.276666667
+Kahekili,3,Pocillopora meandrina,2007,0.681818182
+Kahekili,3,Porites compressa,2007,0
+Kahekili,3,Porites lobata,2007,26.53515152
+Kahekili,7,Montipora capitata,2007,4.105454545
+Kahekili,7,Montipora flabellata,2007,0
+Kahekili,7,Montipora patula,2007,0.8
+Kahekili,7,Pocillopora meandrina,2007,0.32
+Kahekili,7,Porites compressa,2007,0
+Kahekili,7,Porites lobata,2007,26.42545455
+Molokini,8,Montipora capitata,2007,21.43636364
+Molokini,8,Montipora flabellata,2007,0.072727273
+Molokini,8,Montipora patula,2007,19.62545455
+Molokini,8,Pocillopora meandrina,2007,2.261818182
+Molokini,8,Porites compressa,2007,1.734545455
+Molokini,8,Porites lobata,2007,19.48727273
+Molokini,13,Montipora capitata,2007,57.63111111
+Molokini,13,Montipora flabellata,2007,0
+Molokini,13,Montipora patula,2007,27.21434343
+Molokini,13,Pocillopora meandrina,2007,1.054141414
+Molokini,13,Porites compressa,2007,0.08
+Molokini,13,Porites lobata,2007,0.621717172
+Olowalu,3,Montipora capitata,2007,5.461818182
+Olowalu,3,Montipora flabellata,2007,0
+Olowalu,3,Montipora patula,2007,2.64
+Olowalu,3,Pocillopora meandrina,2007,0.523636364
+Olowalu,3,Porites compressa,2007,0
+Olowalu,3,Porites lobata,2007,9.290909091
+Olowalu,7,Montipora capitata,2007,23.24
+Olowalu,7,Montipora flabellata,2007,0
+Olowalu,7,Montipora patula,2007,14.76
+Olowalu,7,Pocillopora meandrina,2007,0.32
+Olowalu,7,Porites compressa,2007,0
+Olowalu,7,Porites lobata,2007,16.36
+Papaula Pt.,10,Montipora capitata,2007,8.64
+Papaula Pt.,10,Montipora flabellata,2007,24.48
+Papaula Pt.,10,Montipora patula,2007,1.16
+Papaula Pt.,10,Pocillopora meandrina,2007,1.68
+Papaula Pt.,10,Porites compressa,2007,0.32
+Papaula Pt.,10,Porites lobata,2007,5.12
+Puamana,3,Montipora capitata,2007,
+Puamana,3,Montipora flabellata,2007,
+Puamana,3,Montipora patula,2007,
+Puamana,3,Pocillopora meandrina,2007,
+Puamana,3,Porites compressa,2007,
+Puamana,3,Porites lobata,2007,
+Honolua North,3,Montipora capitata,2008,2.122222222
+Honolua North,3,Montipora flabellata,2008,0.166666667
+Honolua North,3,Montipora patula,2008,0.577777778
+Honolua North,3,Pocillopora meandrina,2008,0.944444444
+Honolua North,3,Porites compressa,2008,0
+Honolua North,3,Porites lobata,2008,4.077777778
+Honolua South,3,Montipora capitata,2008,1.444444444
+Honolua South,3,Montipora flabellata,2008,0
+Honolua South,3,Montipora patula,2008,1.186666667
+Honolua South,3,Pocillopora meandrina,2008,1.573333333
+Honolua South,3,Porites compressa,2008,0
+Honolua South,3,Porites lobata,2008,3.097777778
+Kahekili,3,Montipora capitata,2008,5.531515152
+Kahekili,3,Montipora flabellata,2008,0.912727273
+Kahekili,3,Montipora patula,2008,4.21030303
+Kahekili,3,Pocillopora meandrina,2008,1.469090909
+Kahekili,3,Porites compressa,2008,2.246060606
+Kahekili,3,Porites lobata,2008,25.35272727
+Kahekili,7,Montipora capitata,2008,
+Kahekili,7,Montipora flabellata,2008,
+Kahekili,7,Montipora patula,2008,
+Kahekili,7,Pocillopora meandrina,2008,
+Kahekili,7,Porites compressa,2008,
+Kahekili,7,Porites lobata,2008,
+Molokini,8,Montipora capitata,2008,22.70181818
+Molokini,8,Montipora flabellata,2008,0.066666667
+Molokini,8,Montipora patula,2008,20.69272727
+Molokini,8,Pocillopora meandrina,2008,2.434545455
+Molokini,8,Porites compressa,2008,2.496969697
+Molokini,8,Porites lobata,2008,16.86666667
+Molokini,13,Montipora capitata,2008,59.54909091
+Molokini,13,Montipora flabellata,2008,0.2
+Molokini,13,Montipora patula,2008,22.77454545
+Molokini,13,Pocillopora meandrina,2008,1.723636364
+Molokini,13,Porites compressa,2008,0.12
+Molokini,13,Porites lobata,2008,1.072727273
+Olowalu,3,Montipora capitata,2008,4.052727273
+Olowalu,3,Montipora flabellata,2008,0.04
+Olowalu,3,Montipora patula,2008,3.267878788
+Olowalu,3,Pocillopora meandrina,2008,0.478787879
+Olowalu,3,Porites compressa,2008,3.610909091
+Olowalu,3,Porites lobata,2008,8.703030303
+Olowalu,7,Montipora capitata,2008,23.15857032
+Olowalu,7,Montipora flabellata,2008,0
+Olowalu,7,Montipora patula,2008,17.05975136
+Olowalu,7,Pocillopora meandrina,2008,1.240932401
+Olowalu,7,Porites compressa,2008,0.208888889
+Olowalu,7,Porites lobata,2008,14.0434965
+Papaula Pt.,10,Montipora capitata,2008,3.730909091
+Papaula Pt.,10,Montipora flabellata,2008,3.523636364
+Papaula Pt.,10,Montipora patula,2008,0.832727273
+Papaula Pt.,10,Pocillopora meandrina,2008,0.28
+Papaula Pt.,10,Porites compressa,2008,0
+Papaula Pt.,10,Porites lobata,2008,3.934545455
+Puamana,3,Montipora capitata,2008,0.556363636
+Puamana,3,Montipora flabellata,2008,0
+Puamana,3,Montipora patula,2008,0
+Puamana,3,Pocillopora meandrina,2008,2.963030303
+Puamana,3,Porites compressa,2008,0
+Puamana,3,Porites lobata,2008,11.88636364
+Honolua North,3,Montipora capitata,2009,1.224149184
+Honolua North,3,Montipora flabellata,2009,0
+Honolua North,3,Montipora patula,2009,1.353706294
+Honolua North,3,Pocillopora meandrina,2009,1.332711733
+Honolua North,3,Porites compressa,2009,0.2
+Honolua North,3,Porites lobata,2009,4.6798446
+Honolua South,3,Montipora capitata,2009,0.380792541
+Honolua South,3,Montipora flabellata,2009,0.170629371
+Honolua South,3,Montipora patula,2009,0.718181818
+Honolua South,3,Pocillopora meandrina,2009,1.954545455
+Honolua South,3,Porites compressa,2009,0.092307692
+Honolua South,3,Porites lobata,2009,3.293240093
+Kahekili,3,Montipora capitata,2009,5.911919192
+Kahekili,3,Montipora flabellata,2009,0.036363636
+Kahekili,3,Montipora patula,2009,4.044949495
+Kahekili,3,Pocillopora meandrina,2009,0.936363636
+Kahekili,3,Porites compressa,2009,6.045757576
+Kahekili,3,Porites lobata,2009,22.35555556
+Kahekili,7,Montipora capitata,2009,5.44
+Kahekili,7,Montipora flabellata,2009,0.04
+Kahekili,7,Montipora patula,2009,0.633333333
+Kahekili,7,Pocillopora meandrina,2009,0.44
+Kahekili,7,Porites compressa,2009,5.82
+Kahekili,7,Porites lobata,2009,12.78666667
+Molokini,8,Montipora capitata,2009,22.87132867
+Molokini,8,Montipora flabellata,2009,0.65
+Molokini,8,Montipora patula,2009,20.16701632
+Molokini,8,Pocillopora meandrina,2009,2.107109557
+Molokini,8,Porites compressa,2009,3.711538462
+Molokini,8,Porites lobata,2009,13.88682984
+Molokini,13,Montipora capitata,2009,59.66666667
+Molokini,13,Montipora flabellata,2009,3.666666667
+Molokini,13,Montipora patula,2009,23.66666667
+Molokini,13,Pocillopora meandrina,2009,0.666666667
+Molokini,13,Porites compressa,2009,0
+Molokini,13,Porites lobata,2009,0
+Olowalu,3,Montipora capitata,2009,4.281010101
+Olowalu,3,Montipora flabellata,2009,0.088888889
+Olowalu,3,Montipora patula,2009,1.76020202
+Olowalu,3,Pocillopora meandrina,2009,1.123636364
+Olowalu,3,Porites compressa,2009,3.214545455
+Olowalu,3,Porites lobata,2009,5.826060606
+Olowalu,7,Montipora capitata,2009,20.15535354
+Olowalu,7,Montipora flabellata,2009,1.466060606
+Olowalu,7,Montipora patula,2009,15.01151515
+Olowalu,7,Pocillopora meandrina,2009,0.893333333
+Olowalu,7,Porites compressa,2009,1.482424242
+Olowalu,7,Porites lobata,2009,12.31353535
+Papaula Pt.,10,Montipora capitata,2009,2.620606061
+Papaula Pt.,10,Montipora flabellata,2009,2.158181818
+Papaula Pt.,10,Montipora patula,2009,0.675151515
+Papaula Pt.,10,Pocillopora meandrina,2009,0
+Papaula Pt.,10,Porites compressa,2009,0
+Papaula Pt.,10,Porites lobata,2009,1.795757576
+Puamana,3,Montipora capitata,2009,0.258181818
+Puamana,3,Montipora flabellata,2009,0
+Puamana,3,Montipora patula,2009,0.218787879
+Puamana,3,Pocillopora meandrina,2009,2.876363636
+Puamana,3,Porites compressa,2009,0
+Puamana,3,Porites lobata,2009,9.210909091
+Honolua North,3,Montipora capitata,2010,1.906060606
+Honolua North,3,Montipora flabellata,2010,0.290909091
+Honolua North,3,Montipora patula,2010,1.424242424
+Honolua North,3,Pocillopora meandrina,2010,0.284848485
+Honolua North,3,Porites compressa,2010,0.033333333
+Honolua North,3,Porites lobata,2010,5.257575758
+Honolua South,3,Montipora capitata,2010,0.352727273
+Honolua South,3,Montipora flabellata,2010,0.374545455
+Honolua South,3,Montipora patula,2010,0.72
+Honolua South,3,Pocillopora meandrina,2010,2.309090909
+Honolua South,3,Porites compressa,2010,0
+Honolua South,3,Porites lobata,2010,2.429090909
+Kahekili,3,Montipora capitata,2010,4.992121212
+Kahekili,3,Montipora flabellata,2010,0.036363636
+Kahekili,3,Montipora patula,2010,5.347878788
+Kahekili,3,Pocillopora meandrina,2010,1.818181818
+Kahekili,3,Porites compressa,2010,6.573333333
+Kahekili,3,Porites lobata,2010,23.50545455
+Kahekili,7,Montipora capitata,2010,5.393939394
+Kahekili,7,Montipora flabellata,2010,0.036363636
+Kahekili,7,Montipora patula,2010,0.833333333
+Kahekili,7,Pocillopora meandrina,2010,0.421212121
+Kahekili,7,Porites compressa,2010,6.93030303
+Kahekili,7,Porites lobata,2010,16.90606061
+Molokini,8,Montipora capitata,2010,21.7
+Molokini,8,Montipora flabellata,2010,0
+Molokini,8,Montipora patula,2010,19.10666667
+Molokini,8,Pocillopora meandrina,2010,2.042424242
+Molokini,8,Porites compressa,2010,3.527272727
+Molokini,8,Porites lobata,2010,11.15575758
+Molokini,13,Montipora capitata,2010,60.16060606
+Molokini,13,Montipora flabellata,2010,0
+Molokini,13,Montipora patula,2010,22.25454545
+Molokini,13,Pocillopora meandrina,2010,0.418181818
+Molokini,13,Porites compressa,2010,0.618181818
+Molokini,13,Porites lobata,2010,0.412121212
+Olowalu,3,Montipora capitata,2010,3.793240093
+Olowalu,3,Montipora flabellata,2010,0
+Olowalu,3,Montipora patula,2010,1.56969697
+Olowalu,3,Pocillopora meandrina,2010,1.161072261
+Olowalu,3,Porites compressa,2010,3.831235431
+Olowalu,3,Porites lobata,2010,6.621212121
+Olowalu,7,Montipora capitata,2010,22.65757576
+Olowalu,7,Montipora flabellata,2010,0
+Olowalu,7,Montipora patula,2010,18.75757576
+Olowalu,7,Pocillopora meandrina,2010,0.578787879
+Olowalu,7,Porites compressa,2010,1.796969697
+Olowalu,7,Porites lobata,2010,11.78787879
+Papaula Pt.,10,Montipora capitata,2010,2.017489177
+Papaula Pt.,10,Montipora flabellata,2010,2.485714286
+Papaula Pt.,10,Montipora patula,2010,0.097142857
+Papaula Pt.,10,Pocillopora meandrina,2010,0.228571429
+Papaula Pt.,10,Porites compressa,2010,0
+Papaula Pt.,10,Porites lobata,2010,1.014632035
+Puamana,3,Montipora capitata,2010,0.106060606
+Puamana,3,Montipora flabellata,2010,0
+Puamana,3,Montipora patula,2010,0.254545455
+Puamana,3,Pocillopora meandrina,2010,2.069090909
+Puamana,3,Porites compressa,2010,0.284848485
+Puamana,3,Porites lobata,2010,9.023030303
+Honolua North,3,Montipora capitata,2011,1.018787879
+Honolua North,3,Montipora flabellata,2011,0.642424242
+Honolua North,3,Montipora patula,2011,1.006666667
+Honolua North,3,Pocillopora meandrina,2011,0.484848485
+Honolua North,3,Porites compressa,2011,0.239393939
+Honolua North,3,Porites lobata,2011,6.227878788
+Honolua South,3,Montipora capitata,2011,0.145454545
+Honolua South,3,Montipora flabellata,2011,0.363636364
+Honolua South,3,Montipora patula,2011,0.818181818
+Honolua South,3,Pocillopora meandrina,2011,2.538181818
+Honolua South,3,Porites compressa,2011,0.04
+Honolua South,3,Porites lobata,2011,4.196363636
+Kahekili,3,Montipora capitata,2011,6.04
+Kahekili,3,Montipora flabellata,2011,0.072727273
+Kahekili,3,Montipora patula,2011,6.138181818
+Kahekili,3,Pocillopora meandrina,2011,1.494545455
+Kahekili,3,Porites compressa,2011,7.032727273
+Kahekili,3,Porites lobata,2011,24.84363636
+Kahekili,7,Montipora capitata,2011,3.970909091
+Kahekili,7,Montipora flabellata,2011,0
+Kahekili,7,Montipora patula,2011,0.996363636
+Kahekili,7,Pocillopora meandrina,2011,1.014545455
+Kahekili,7,Porites compressa,2011,3.850909091
+Kahekili,7,Porites lobata,2011,19.72363636
+Molokini,8,Montipora capitata,2011,22.77575758
+Molokini,8,Montipora flabellata,2011,0
+Molokini,8,Montipora patula,2011,24.83939394
+Molokini,8,Pocillopora meandrina,2011,2.445454545
+Molokini,8,Porites compressa,2011,5.333333333
+Molokini,8,Porites lobata,2011,10.07575758
+Molokini,13,Montipora capitata,2011,52.03515152
+Molokini,13,Montipora flabellata,2011,0
+Molokini,13,Montipora patula,2011,29.00424242
+Molokini,13,Pocillopora meandrina,2011,1.004242424
+Molokini,13,Porites compressa,2011,0.691515152
+Molokini,13,Porites lobata,2011,0.321212121
+Olowalu,3,Montipora capitata,2011,5.103216783
+Olowalu,3,Montipora flabellata,2011,0
+Olowalu,3,Montipora patula,2011,1.684941725
+Olowalu,3,Pocillopora meandrina,2011,0.564615385
+Olowalu,3,Porites compressa,2011,3.16
+Olowalu,3,Porites lobata,2011,7.673333333
+Olowalu,7,Montipora capitata,2011,18.59515152
+Olowalu,7,Montipora flabellata,2011,0
+Olowalu,7,Montipora patula,2011,16.12080808
+Olowalu,7,Pocillopora meandrina,2011,1.121616162
+Olowalu,7,Porites compressa,2011,0.450909091
+Olowalu,7,Porites lobata,2011,16.41333333
+Papaula Pt.,10,Montipora capitata,2011,1.665454545
+Papaula Pt.,10,Montipora flabellata,2011,1.909090909
+Papaula Pt.,10,Montipora patula,2011,1.145454545
+Papaula Pt.,10,Pocillopora meandrina,2011,0.08
+Papaula Pt.,10,Porites compressa,2011,0.12
+Papaula Pt.,10,Porites lobata,2011,1.632727273
+Puamana,3,Montipora capitata,2011,0.258181818
+Puamana,3,Montipora flabellata,2011,0
+Puamana,3,Montipora patula,2011,0.371515152
+Puamana,3,Pocillopora meandrina,2011,3.609277389
+Puamana,3,Porites compressa,2011,0.218181818
+Puamana,3,Porites lobata,2011,12.59039627
+Honolua North,3,Montipora capitata,2012,1.648282828
+Honolua North,3,Montipora flabellata,2012,0.776767677
+Honolua North,3,Montipora patula,2012,1.978686869
+Honolua North,3,Pocillopora meandrina,2012,0.573737374
+Honolua North,3,Porites compressa,2012,0.309090909
+Honolua North,3,Porites lobata,2012,5.01020202
+Honolua South,3,Montipora capitata,2012,0.556363636
+Honolua South,3,Montipora flabellata,2012,0.421818182
+Honolua South,3,Montipora patula,2012,1.225454545
+Honolua South,3,Pocillopora meandrina,2012,2.88
+Honolua South,3,Porites compressa,2012,0.04
+Honolua South,3,Porites lobata,2012,3.378181818
+Kahekili,3,Montipora capitata,2012,6.643636364
+Kahekili,3,Montipora flabellata,2012,0
+Kahekili,3,Montipora patula,2012,4.498181818
+Kahekili,3,Pocillopora meandrina,2012,1.294545455
+Kahekili,3,Porites compressa,2012,6.985454545
+Kahekili,3,Porites lobata,2012,25.05818182
+Kahekili,7,Montipora capitata,2012,3.956363636
+Kahekili,7,Montipora flabellata,2012,0
+Kahekili,7,Montipora patula,2012,0.970909091
+Kahekili,7,Pocillopora meandrina,2012,0.607272727
+Kahekili,7,Porites compressa,2012,3.883636364
+Kahekili,7,Porites lobata,2012,19.49090909
+Molokini,8,Montipora capitata,2012,18.60032634
+Molokini,8,Montipora flabellata,2012,0.072727273
+Molokini,8,Montipora patula,2012,21.43752914
+Molokini,8,Pocillopora meandrina,2012,2.876829837
+Molokini,8,Porites compressa,2012,3.270815851
+Molokini,8,Porites lobata,2012,12.08899767
+Molokini,13,Montipora capitata,2012,51.71515152
+Molokini,13,Montipora flabellata,2012,0
+Molokini,13,Montipora patula,2012,27.94848485
+Molokini,13,Pocillopora meandrina,2012,0.898787879
+Molokini,13,Porites compressa,2012,0.378181818
+Molokini,13,Porites lobata,2012,0.869090909
+Olowalu,3,Montipora capitata,2012,4.128340548
+Olowalu,3,Montipora flabellata,2012,0
+Olowalu,3,Montipora patula,2012,1.647792208
+Olowalu,3,Pocillopora meandrina,2012,1.32963925
+Olowalu,3,Porites compressa,2012,3.068282828
+Olowalu,3,Porites lobata,2012,4.365887446
+Olowalu,7,Montipora capitata,2012,17.09757576
+Olowalu,7,Montipora flabellata,2012,0
+Olowalu,7,Montipora patula,2012,12.61878788
+Olowalu,7,Pocillopora meandrina,2012,1.25030303
+Olowalu,7,Porites compressa,2012,1.266060606
+Olowalu,7,Porites lobata,2012,15.39393939
+Papaula Pt.,10,Montipora capitata,2012,1.386060606
+Papaula Pt.,10,Montipora flabellata,2012,1.529090909
+Papaula Pt.,10,Montipora patula,2012,0.665454545
+Papaula Pt.,10,Pocillopora meandrina,2012,0.076363636
+Papaula Pt.,10,Porites compressa,2012,0.08
+Papaula Pt.,10,Porites lobata,2012,0.811515152
+Puamana,3,Montipora capitata,2012,0.036363636
+Puamana,3,Montipora flabellata,2012,0
+Puamana,3,Montipora patula,2012,0.185454545
+Puamana,3,Pocillopora meandrina,2012,2.637575758
+Puamana,3,Porites compressa,2012,0.447272727
+Puamana,3,Porites lobata,2012,10.85151515
