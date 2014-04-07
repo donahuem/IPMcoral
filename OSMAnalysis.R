@@ -177,7 +177,24 @@ par(mar=c(2.5,.5,2,.5))
 par(oma=c(6,5,1,6))
 for(i in 1:10){
   sn<-c("Honolua N","Honolua S","Kahekili 3m","Kahekili 7m","Molokini 7m","Molokini 13m","Olowalu 3m","Olowalu 7m","Papaula 10m","Puamana 3m")
-  barplot(elasP[i,c(12,4,15,25,14,18,7,13)],main=sn[i],las=2,xlim=c(min(elasP),max(elasP)),horiz=TRUE,col=cl,axisnames=FALSE)
+  barplot(elasP[i,c(12,
+corelas1<-matrix(0,32,2)
+rownames(corelas1)<-rownames(params)
+colnames(corelas1)<-c("r","pvalue")
+par(mfrow=c(3,4))
+for (i in 1:32){
+  x<-cor.test(slopes$slopes,elasP[,i])
+  corelas1[i,1]<-x$estimate
+  corelas1[i,2]<-x$p.value
+  plot(slopes$slopes,elasP[,i],main=rownames(corelas1)[i])
+}
+
+bleh<-subset(corelas1,corelas1[,2]<0.05)
+par(mfrow=c(3,4))
+for (i in 1:32){
+  plot(slopes$posneg,elasP[,i],main=rownames(corelas1)[i],pch=18, xlim=c(-2,2))
+}
+#no significant relationship between4,15,25,14,18,7,13)],main=sn[i],las=2,xlim=c(min(elasP),max(elasP)),horiz=TRUE,col=cl,axisnames=FALSE)
   #if(i %in% c(1,5,9))barplot(elasP[i,c(12,4,15,25,14,18,7,13)],main=sn[i],las=2,xlim=c(min(elasP),max(elasP)),horiz=TRUE,axes=FALSE)
   #if(i %in% c(2,3,4,6,7,8,10))barplot(elasP[i,c(12,4,15,25,14,18,7,13)],main=sn[i],las=2,xlim=c(min(elasP),max(elasP)),horiz=TRUE,axisnames=FALSE,axes=FALSE)
   #if(i %in% c(7,8,9,10))axis(1)
@@ -259,23 +276,6 @@ colnames(slopes)<-c("slopes","pvalue","lambda","utrans")
 slopes$eig<-eig
 slopes$utrans<-as.factor(levels(MC$utrans))
 
-corelas1<-matrix(0,32,2)
-rownames(corelas1)<-rownames(params)
-colnames(corelas1)<-c("r","pvalue")
-par(mfrow=c(3,4))
-for (i in 1:32){
-  x<-cor.test(slopes$slopes,elasP[,i])
-  corelas1[i,1]<-x$estimate
-  corelas1[i,2]<-x$p.value
-  plot(slopes$slopes,elasP[,i],main=rownames(corelas1)[i])
-}
-
-bleh<-subset(corelas1,corelas1[,2]<0.05)
-par(mfrow=c(3,4))
-for (i in 1:32){
-  plot(slopes$posneg,elasP[,i],main=rownames(corelas1)[i],pch=18, xlim=c(-2,2))
-}
-#no significant relationship between cover and elasticities
 #no signiricant relationship between cover and eigen values
 
 #Try again using only areas with significant changes in cover

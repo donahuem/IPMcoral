@@ -1,4 +1,4 @@
-#####################################################################Plot Vital Rate Regressions#######################################################
+##############Plot Vital Rate Regressions#######################################################
 
 #http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
 cl<-c("cyan","mediumturquoise","dodgerblue","green3","purple","olivedrab2","orchid1","blue","darkblue","darkorchid4")

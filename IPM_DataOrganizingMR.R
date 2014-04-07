@@ -168,7 +168,7 @@ MCrs <- subset(MC,MC$fate_t=="R")
 library(gdata)
 
 #Use alldata.txt (just a list of colonies and sizes with photoquad info) to get the recruit info
-rawdata<-data<- read.delim("alldata_28Mar2013.txt")
+rawdata<-data<- read.delim("alldata_9Feb2014.txt")
 rawdata$site<-sitetable[charmatch(rawdata$sitename,sitenametable)]
 rawdata$site<-factor(rawdata$site)
 rawdata$quad<-factor(paste("Q",rawdata$quad,sep=""))

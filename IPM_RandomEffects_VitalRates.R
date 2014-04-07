@@ -2,7 +2,7 @@
 library(nlme) # for gls(), lme(), nlmer()
 library(lme4) # glmer()
 #library(MASS)
-#library(nnet)
+library(nnet) #for multinom() for clonenum
 nx<-10 # number of sites for this species
 ncoef<-32 # number of coefficients
 n<-300 # number of cuts for meshpoints/discretization into matrix
