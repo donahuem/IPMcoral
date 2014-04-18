@@ -56,7 +56,7 @@ c.yx=function(xp,x,params) {
   p4<-1-u1/uall-u2/uall-u3/uall
   nfiss<-u1/uall+u2/uall*2+u3/uall*3+p4*70/11#70/11 is weighted average of # of offspring over 4.
   ##return: prob of fission * 1-prob of lo number*number of fission products * prob that a fisser of size x prodcues a product of size xp
-  p.fiss.x(x,params)*nfiss*dunif(xp,min=-2.786705,max=x)#-2.786705 is slightly smaller than minimum size used in model.
+  p.fiss.x(x,params)*nfiss*dunif(xp,min=(min(y)-0.00001),max=x)#max=(x+log(0.5)))
 }
 
 # number of clones per adult for "constant correction" of clonal matrix (no size distribution of offspring)

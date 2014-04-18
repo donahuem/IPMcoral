@@ -73,7 +73,7 @@ clonenum3.slope=coefficients(clonenum)[2,2]
 
 ##recruitment rate as in Bruno et al. 2011 page 130
 #number of recruits per quad.  Includes all years not just the years including years excluded from growth due to 2 year change etc.
-rcrt.lmeU.Y <- glmer(recruits~1+(1|utrans)+(1|year),family=poisson,data=MCr)
+rcrt.lmeU.Y <- glmer(recruits~1+(1|utrans),family=poisson,data=MCr)
 summary(rcrt.lmeU.Y)
 recruit.int= c(fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
 
@@ -93,7 +93,7 @@ recruit.size.sd=(summary(rec.sizeU)$sigma)
 #recruit.size.sd=sd(MC$sizeNext[MC$fateIPM=="recruit"])
 
 #number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
-dens.lmeU.Y <- glmer(colnum~1+(1|utrans)+(1|year),family=poisson,data=MCd)
+dens.lmeU.Y <- glmer(colnum~1+(1|utrans),family=poisson,data=MCd)
 summary(dens.lmeU.Y)
 dens.int=c(fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
 

@@ -131,12 +131,12 @@ for (site in 1:nx){
   }
 }
 #increase by 10%
-elasP <- (eig-eigsensP)/eig/(0.1)
+elasP <- (eig-eigsensP)/eig/(0.1)#(a/da)*(deig/eig)= (a/(a-1.1*a))*(eig-eigsensP)/eig
 colnames(elasP)<-rownames(params)
 rownames(elasP)<-levels(MC$utrans)
 
 #decrease by 10%
-elasN <- (eig-eigsensN)/eig/(0.1)
+elasN <- (eig-eigsensN)/eig/(0.1)#10*(eig-eigsensN)/eig
 colnames(elasN)<-rownames(params)
 rownames(elasN)<-levels(MC$utrans)
 
@@ -393,3 +393,34 @@ for (i in 1:10){
   rankelasRN[,i]<-rank(abs(elasRN[i,]))
 }
 
+
+
+#Elemental elasticities                      
+
+mins<-rep(0,10)
+maxs<-rep(0,10)
+for (site in 1:nx){
+  K<-Kernel(y,n,params)
+  A<-eigen.analysis(K)
+  maxs[site]<-max(A$elasticities)
+  mins[site]<-min(A$elasticities)
+}
+ma<-max(maxs)
+mi<-min(mins)     
+par(mfrow=c(3,4))
+par(mar=c(.5,.5,2,.5))
+par(oma=c(6,6,1,10))
+for (site in 1:nx){
+  sn<-c("Honolua N","Honolua S","Kahekili 3m","Kahekili 7m","Molokini 7m","Molokini 13m","Olowalu 3m","Olowalu 7m","Papaula 10m","Puamana 3m")
+  K<-Kernel(y,n,params)
+  A<-eigen.analysis(K)
+  image(y,y,t(A$elasticities),col=topo.colors(300),main=sn[site],xlab="",ylab="",zlim=c(mi,ma),axes=FALSE)
+  if (site %in% c(7,8,9,10)) axis(1)
+  if (site %in% c(1,5,9)) axis(2)
+}
+mtext("Size (t)", side = 1, outer = TRUE, cex = 1, line = 2.2,col = "grey20")
+mtext("Size (t+1)", side = 2, outer = TRUE, cex = 1, line = 2.2,col = "grey20")
+mtext("Elasticities", side = 4, outer = TRUE, cex = 1, line = 5,col = "grey20")
+par(mfrow=c(1,1))
+par(mar=c(1,1,1,1),oma=c(1,1,1,5))
+vertical.image.legend(col=topo.colors(300),zlim=c(mi,ma))     
