@@ -3,7 +3,7 @@ library(nlme) # for gls(), lme(), nlmer()
 library(lme4) # glmer()
 #library(MASS)
 library(nnet) #for multinom() for clonenum
-nx<-10 # number of sites for this species
+nx<-11 # number of sites for this species
 ncoef<-32 # number of coefficients
 n<-300 # number of cuts for meshpoints/discretization into matrix
 
@@ -12,14 +12,14 @@ n<-300 # number of cuts for meshpoints/discretization into matrix
 #survival regression
 surv.reg.re0<-glmer(Psurv~size+(1|utrans),data=MC,family=binomial)
 summary(surv.reg.re0)
-surv.int.re0=c(fixed.effects(surv.reg.re0)[1]+random.effects(surv.reg.re0)[[1]][1:10,1])
+surv.int.re0=c(fixed.effects(surv.reg.re0)[1],fixed.effects(surv.reg.re0)[1]+random.effects(surv.reg.re0)[[1]][1:10,1])
 surv.slope.re0=fixed.effects(surv.reg.re0)[2]
 
 # growth regression
 growth.reg.re.a0<-nlme(sizeNext~a+b*size+c*exp(-d*size),data=GONGS,fixed=a+b+c+d~1,random=c~1|utrans,start=list(fixed=c(1,1,1,1)),control=gnlsControl(nlsTol=0.1))
 growth.int.a0<-fixed.effects(growth.reg.re.a0)[1]
 growth.slope.a0<-fixed.effects(growth.reg.re.a0)[2]
-growth.e1.a0<-c(fixed.effects(growth.reg.re.a0)[3]+random.effects(growth.reg.re.a0)[1:10,1])
+growth.e1.a0<-c(fixed.effects(growth.reg.re.a0)[3],fixed.effects(growth.reg.re.a0)[3]+random.effects(growth.reg.re.a0)[1:10,1])
 growth.e2.a0<-fixed.effects(growth.reg.re.a0)[4]
 growth.sd.a0<-summary(growth.reg.re.a0)$sigma
 
@@ -47,18 +47,18 @@ pes.int<-coefficients(Pes)
 #probability of fission conditional on survival (for fission growth function and clonal matrix)
 fiss.re0=glmer(Pfiss~size+(1|utrans),data=MC,family=binomial)
 summary(fiss.re0)
-Pfiss.int.re0=c(fixed.effects(fiss.re0)[1]+random.effects(fiss.re0)[[1]][1:10,1])
+Pfiss.int.re0=c(fixed.effects(fiss.re0)[1],fixed.effects(fiss.re0)[1]+random.effects(fiss.re0)[[1]][1:10,1])
 Pfiss.slope.re0=fixed.effects(fiss.re0)[2]
 
 # probability of fusion conditional on survival(for fusion growth function)
 fuse.re0<-glmer(Pfuse~size+(1|utrans),data=MC,family=binomial)
 summary(fuse.re0)
-Pfuse.int.re0=c(fixed.effects(fuse.re0)[1]+random.effects(fuse.re0)[[1]][1:10,1])
+Pfuse.int.re0=c(fixed.effects(fuse.re0)[1],fixed.effects(fuse.re0)[1]+random.effects(fuse.re0)[[1]][1:10,1])
 Pfuse.slope.re0=fixed.effects(fuse.re0)[2]
 
 fuseLG.re0=glmer(PfuseLG~size+(1|utrans),data=MC,family=binomial)
 summary(fuseLG.re0)
-PfuseLG.int.re0=c(fixed.effects(fuseLG.re0)[1]+random.effects(fuseLG.re0)[[1]][1:10,1])
+PfuseLG.int.re0=c(fixed.effects(fuseLG.re0)[1],fixed.effects(fuseLG.re0)[1]+random.effects(fuseLG.re0)[[1]][1:10,1])
 PfuseLG.slope.re0=fixed.effects(fuseLG.re0)[2]
 
 #number of clones per fission event: 2 functions for data subset with hi (4-10) and lo (1-3) numfiss using zero truncated poisson
@@ -74,10 +74,20 @@ clonenum3.slope=coefficients(clonenum)[2,2]
 ##recruitment rate as in Bruno et al. 2011 page 130
 #number of recruits per quad.  Includes all years not just the years including years excluded from growth due to 2 year change etc.
 rcrt.lmeU.Y <- glmer(recruits~1+(1|utrans),family=poisson,data=MCr)
+test<-subset(MCr,MCr$spcover_t!=0)
 summary(rcrt.lmeU.Y)
-recruit.int= c(fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
+recruit.int= c(fixef(rcrt.lmeU.Y)[1],fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
 
-
+#Cover by quad added 4/28/14 by MR.  Using MCr
+#want to look at relationship between log transformed area and # of recruits added 5/15/14 by MR
+#Transfrom spcover_t
+MCr$lnspcov<-log(MCr$spcover_t)
+#remove zeros so that we can use log transformation??????????????
+#not sure about this have MeganD look it over.
+test<-subset(MCr,MCr$spcover_t!=0)
+rcov<-lme(spcover_t~1,random=~1|utrans,data=test)
+summary(rcov)
+recruit.cov<-c(fixef(rcov)[1],fixef(rcov)[1]+ranef(rcov)[1:10,1])
 ##Recruitment rate using averages of observed recruits and colony density (not using lm just averaged by hand a while ago so data may have changed)
 #recruit.int=0.0905897
 
@@ -87,7 +97,7 @@ recruit.int= c(fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
 #size distribution of recruits
 rec.sizeU<-lme(sizeNext~1,random=~1|utrans,data=MCrs)
 summary(rec.sizeU)
-recruit.size.mean=c(fixef(rec.sizeU)[1]+ranef(rec.sizeU)[1:10,1])
+recruit.size.mean=c(fixef(rec.sizeU)[1],fixef(rec.sizeU)[1]+ranef(rec.sizeU)[1:10,1])
 recruit.size.sd=(summary(rec.sizeU)$sigma)
 #recruit.size.mean=mean(MC$sizeNext[MC$fateIPM=="recruit"])
 #recruit.size.sd=sd(MC$sizeNext[MC$fateIPM=="recruit"])
@@ -95,20 +105,27 @@ recruit.size.sd=(summary(rec.sizeU)$sigma)
 #number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
 dens.lmeU.Y <- glmer(colnum~1+(1|utrans),family=poisson,data=MCd)
 summary(dens.lmeU.Y)
-dens.int=c(fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
+dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
 
 # Size distribution of colonies colonies present at time t (all but recruits and fissSM)
 col.size<-lme(size~1,random=~1|utrans,data=MCds)
 summary(col.size)
-colsize.int=c(fixef(col.size)[1]+ranef(col.size)[1:10,1])
+colsize.int=c(fixef(col.size)[1],fixef(col.size)[1]+ranef(col.size)[1:10,1])
 colsize.sd=(summary(col.size)$sigma)
+
+#r<-c(rep(0,nx))
+#for(i in 1:nx){
+ # recruitdensity=exp(recruit.int[i])
+  #colonydensity=exp(dens.int[i])
+  #sfd= dnorm(y,colsize.int[i],colsize.sd)
+  #r[i]<-recruitdensity/sum(sfd*y*colonydensity)
+#}
 
 r<-c(rep(0,nx))
 for(i in 1:nx){
-  recruitdensity=exp(recruit.int[i])
-  colonydensity=exp(dens.int[i])
-  sfd= dnorm(y,colsize.int[i],colsize.sd)
-  r[i]<-recruitdensity/sum(sfd*y*colonydensity)
+recruitdensity=exp(recruit.int[i])
+cover=recruit.cov[i]
+r[i]<-recruitdensity/cover
 }
 
 #make slots for parameters
