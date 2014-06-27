@@ -215,5 +215,29 @@ lines(y,s.x(y,params))
 lines(y,s.x(y,params)*0.9,col="blue")
 legend("bottomright",legend=c("s.x","s.x+10%","s.x-10%"),col=c("black","red","blue"),lwd=1)
 
-######################################################################################
-
+###############################Compare SFD to stable stage distribution#######################################################
+par(mfrow=c(3,4))
+for (i in 1:10){
+  x<-subset(MC,MC$utrans==levels(MC$utrans)[i])
+  x<-subset(x,x$size!="NA")
+  x<-droplevels(x)
+  site=i+1
+  K<-Kernel(y,n,params)
+  A<-eigen.analysis(K)
+  yfit<-dnorm(y,mean=mean(x$size,na.rm=T),sd=sd(x$size,na.rm=T))
+  yfit<-yfit/sum(yfit)
+  plot(y,yfit,col="blue",type="l",xlim=c(-2,10),xlab= "ln(area)",ylab="proportional distribution",main=levels(MC$utrans)[i])
+  lines(y,A$stable.stage)
+}
+#Single Plot
+par(mfrow=c(1,1))
+x<-subset(MC,x$size!="NA")
+x<-droplevels(x)
+site=1
+K<-Kernel(y,n,params)
+A<-eigen.analysis(K)
+yfit<-dnorm(y,mean=mean(x$size,na.rm=T),sd=sd(x$size,na.rm=T))
+yfit<-yfit/sum(yfit)
+plot(y,yfit,col="blue",type="l",xlim=c(-2,10),xlab= "ln(area)",ylab="proportional distribution")
+lines(y,A$stable.stage)
+legend("topright",legend=c("IPMdata","IPMstablestage"),col=c("blue","black"),lty=1)
