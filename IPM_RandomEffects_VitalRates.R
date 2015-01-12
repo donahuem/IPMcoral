@@ -71,10 +71,42 @@ clonenum2.slope=coefficients(clonenum)[3,2]
 clonenum3.int=coefficients(clonenum)[2,1]
 clonenum3.slope=coefficients(clonenum)[2,2]
 
-##recruitment rate as in Bruno et al. 2011 page 130
+
+##############################################################################################################################
+#First Attempts at estimating rates of recruitment by density
+##Recruitment rate using averages of observed recruits and colony density (not using lm just averaged by hand a while ago so data may have changed)
+#recruit.int=0.0905897
+##Tried different recruitment rates will think about more with sensitivity analyses
+#recruit.int=0.01
+#recruit.size.mean=mean(MC$sizeNext[MC$fateIPM=="recruit"])
+#recruit.size.sd=sd(MC$sizeNext[MC$fateIPM=="recruit"])
+###############################################################################################################################
+# Second attempt at estimating recruitment
+##based on Bruno et al. 2011 page 130
+#Used density, size distribution of 'adult colonies' 
+#Basically estimating coral cover.  But we already have this so better to use measured values.  Spoke with MeganD about it.
+#number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
+#dens.lmeU.Y <- glmer(colnum~1+(1|utrans),family=poisson,data=MCd)
+#summary(dens.lmeU.Y)
+#dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
+
+# Size distribution of colonies colonies present at time t (all but recruits and fissSM)
+#col.size<-lme(size~1,random=~1|utrans,data=MCds)
+#summary(col.size)
+#colsize.int=c(fixef(col.size)[1],fixef(col.size)[1]+ranef(col.size)[1:10,1])
+#colsize.sd=(summary(col.size)$sigma)
+
+#r<-c(rep(0,nx))
+#for(i in 1:nx){
+# recruitdensity=exp(recruit.int[i])
+#colonydensity=exp(dens.int[i])
+#sfd= dnorm(y,colsize.int[i],colsize.sd)
+#r[i]<-recruitdensity/sum(sfd*y*colonydensity)
+#}
+#################################################################################################################################
+#Third attemp at estimating recruitment rate by colony size using measured coral cover (See notes above)
 #number of recruits per quad.  Includes all years not just the years including years excluded from growth due to 2 year change etc.
 rcrt.lmeU.Y <- glmer(recruits~1+(1|utrans),family=poisson,data=MCr)
-test<-subset(MCr,MCr$spcover_t!=0)
 summary(rcrt.lmeU.Y)
 recruit.int= c(fixef(rcrt.lmeU.Y)[1],fixef(rcrt.lmeU.Y)[1]+ranef(rcrt.lmeU.Y)[[1]][1:10,1])
 
@@ -85,42 +117,19 @@ MCr$lnspcov<-log(MCr$spcover_t)
 #remove zeros so that we can use log transformation??????????????
 #not sure about this have MeganD look it over.
 test<-subset(MCr,MCr$spcover_t!=0)
-rcov<-lme(spcover_t~1,random=~1|utrans,data=test)
+#Used to be spcover_t~1
+#Changed to lnspcov~1 1/10/15
+#This increases the estimate of r
+rcov<-lme(lnspcov~1,random=~1|utrans,data=test)
 summary(rcov)
 recruit.cov<-c(fixef(rcov)[1],fixef(rcov)[1]+ranef(rcov)[1:10,1])
-##Recruitment rate using averages of observed recruits and colony density (not using lm just averaged by hand a while ago so data may have changed)
-#recruit.int=0.0905897
-
-##Tried different recruitment rates will think about more with sensitivity analyses
-#recruit.int=0.01
-
 #size distribution of recruits
 rec.sizeU<-lme(sizeNext~1,random=~1|utrans,data=MCrs)
 summary(rec.sizeU)
 recruit.size.mean=c(fixef(rec.sizeU)[1],fixef(rec.sizeU)[1]+ranef(rec.sizeU)[1:10,1])
 recruit.size.sd=(summary(rec.sizeU)$sigma)
-#recruit.size.mean=mean(MC$sizeNext[MC$fateIPM=="recruit"])
-#recruit.size.sd=sd(MC$sizeNext[MC$fateIPM=="recruit"])
 
-#number of colonies per quadIncludes all years not just the years including years excluded from growth due to 2 year change etc.
-dens.lmeU.Y <- glmer(colnum~1+(1|utrans),family=poisson,data=MCd)
-summary(dens.lmeU.Y)
-dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
-
-# Size distribution of colonies colonies present at time t (all but recruits and fissSM)
-col.size<-lme(size~1,random=~1|utrans,data=MCds)
-summary(col.size)
-colsize.int=c(fixef(col.size)[1],fixef(col.size)[1]+ranef(col.size)[1:10,1])
-colsize.sd=(summary(col.size)$sigma)
-
-#r<-c(rep(0,nx))
-#for(i in 1:nx){
- # recruitdensity=exp(recruit.int[i])
-  #colonydensity=exp(dens.int[i])
-  #sfd= dnorm(y,colsize.int[i],colsize.sd)
-  #r[i]<-recruitdensity/sum(sfd*y*colonydensity)
-#}
-
+#This is what goes into params
 r<-c(rep(0,nx))
 for(i in 1:nx){
 recruitdensity=exp(recruit.int[i])
