@@ -4,8 +4,7 @@ library(lme4) # glmer()
 #library(MASS)
 library(nnet) #for multinom() for clonenum
 nx<-11 # number of sites for this species
-ncoef<-32 # number of coefficients
-n<-300 # number of cuts for meshpoints/discretization into matrix
+ncoef<-35 # number of coefficients
 
 ###############Vital Rate Functions###################################################################################
 
@@ -121,6 +120,7 @@ test<-subset(MCr,MCr$spcover_t!=0)
 #Changed to lnspcov~1 1/10/15
 #This increases the estimate of r
 rcov<-lme(lnspcov~1,random=~1|utrans,data=test)
+#rcov<-lme(spcover_t~1,random=~1|utrans,data=test)
 summary(rcov)
 recruit.cov<-c(fixef(rcov)[1],fixef(rcov)[1]+ranef(rcov)[1:10,1])
 #size distribution of recruits
@@ -132,10 +132,38 @@ recruit.size.sd=(summary(rec.sizeU)$sigma)
 #This is what goes into params
 r<-c(rep(0,nx))
 for(i in 1:nx){
-recruitdensity=exp(recruit.int[i])
+recruitnumber=exp(recruit.int[i])
 cover=recruit.cov[i]
-r[i]<-recruitdensity/cover
+r[i]<-recruitnumber/cover
 }
+####################################################
+#on 2/27/15 MeganD and I had a meeting where we decided to fit size dependent and size independent models.
+#If there is no difference then we will pick one and say that the difference did not matter
+#Above, we went back and forth about whether we would expect colony fecundity to be a function of surface area or log-transformed surface area
+#un-transformed surface area was unrealistic
+#We will go with log-transformed cover to calculate closed population r
+#for size independent, we still need the number of recruits to be a function of idividual colonies.  
+#Size independent will be a function of colony density
+#here I will cut and paste code from scenario 2 above.  But we will not be using the sfd as in Bruno
+#number of colonies per quadIncludes all years including years excluded from growth due to 2 year change etc.
+#dens.lmeU.Y <- glmer(colnum~1+(1|utrans),family=poisson,data=MCd)
+#summary(dens.lmeU.Y)
+#dens.int=c(fixef(dens.lmeU.Y)[1],fixef(dens.lmeU.Y)[1]+ranef(dens.lmeU.Y)[[1]][1:10,1])
+
+#This is what goes into params
+#r<-c(rep(0,nx))
+#for(i in 1:nx){
+ # recruitnumber=exp(recruit.int[i])
+  #density=exp(dens.int[i])
+  #r[i]<-recruitnumber/density
+#}
+
+
+##normal distribution for clonal offspring
+clonesize.normal<-gls(sizeNext~size,data=MCfs,weights=varFixed(~size))
+clone.size.int<-coefficients(clonesize.normal)[1]
+clone.size.slope<-coefficients(clonesize.normal)[2]
+clone.size.var<-summary(clonesize.normal)$sigma^2
 
 #make slots for parameters
 params<-matrix(0, ncoef, nx)  #creates a matrix of zeros with ncoef rows and nx (num of sites) columns
@@ -172,5 +200,7 @@ params[29,]<-rep(clonenum3.slope)    #clonenum slope lo number of fission events
 params[30,]<-c(recruit.size.mean)     #mean size of recruitsby site
 params[31,]<-rep(recruit.size.sd)     #sd size of recruits, same across sites
 params[32,]<-c(r)                     #estimated number of recruits per colony by site (as in Bruno et al. 2011)
-
-rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.e1","growth.e2","growth.sd","Pes","es.int","es.slope","es.sd","fiss.int","fiss.slope","fiss.sd","fuse.int","fuse.slope","fuse.sd","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonenum1.int","clonenum1.slope","clonenum2.int","clonenum2.slope","clonenum3.int","clonenum3.slope","recruit.size.mean","recruit.size.sd","r")
+params[33,]<-c(clone.size.int)
+params[34,]<-c(clone.size.slope)
+params[35,]<-c(clone.size.var)
+rownames(params)<-c("surv.int","surv.slope","growth.int","growth.slope","growth.e1","growth.e2","growth.sd","es.int","es.slope","es.sd","fiss.int","fiss.slope","fiss.sd","fuse.int","fuse.slope","fuse.sd","Pes","Pfiss.int","Pfiss.slope","Pfuse.int","Pfuse.slope","PfuseLG.int","PfuseLG.slope","clonenum1.int","clonenum1.slope","clonenum2.int","clonenum2.slope","clonenum3.int","clonenum3.slope","recruit.size.mean","recruit.size.sd","r","clonesize.int","clonesize.slope","clonesize.var")

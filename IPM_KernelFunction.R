@@ -23,9 +23,9 @@ Kernel<-function(y,n,params){
   
   #calculate the proportion of each size class that grows according to I,U,Gr functions
   S=s.x(y,params=params) # survival 
-  I=p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params) #fisser-only = I
+  I=(p.fiss.x(y,params=params)-p.fiss.x(y,params=params)*p.fuse.x(y,params=params)) #fisser-only = I
   U=(p.fuse.x(y,params=params)*p.fuseLG.x(y,params=params))  #fusion of U AND Ms:  include Ms in fusion growth
-  Gr=1-p.fiss.x(y,params=params)- p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params)
+  Gr=(1-p.fiss.x(y,params=params)- p.fuse.x(y,params=params) + p.fiss.x(y,params=params)*p.fuse.x(y,params=params))
   ES=p.es.x(y,params=params)
   
   GS=h*outer(y,y,gs.yx,params=params)
@@ -72,12 +72,12 @@ Kernel<-function(y,n,params){
   #for F matrix
   f<- f.y(y,params=params)
   correction.here <- f/colSums(F)
-  F<- t(t(F) * correction.here)
+  F<- ifelse(F==0,0,t(t(F) * correction.here))
   
   #for Cmatrix
   c<-c.y(y,params=params)
   correction.here <- c/colSums(C)
-  C<- t(t(C) * correction.here)
+  C<- ifelse (C==0,0,t(t(C) * correction.here))
   
   K=P+C+F
   return(K)

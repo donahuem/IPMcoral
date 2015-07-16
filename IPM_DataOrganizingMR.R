@@ -155,9 +155,11 @@ MCf$fnumfiss2<-values[match(MCf$numfiss,index)]
 MCf$fnumfiss<-as.factor(MCf$fnumfiss)
 MCf$fnumfiss2<-as.factor(MCf$fnumfiss2)
 xtabs(~fnumfiss,MCf)
+MCf<-subset(MCf,size>0)
 MCf<-droplevels(MCf)
 
 MCfs<-subset(MC,fateIPM=="fissSM")
+MCfs<-subset(MCfs,size>0)
 MCfs<-droplevels(MCfs)
 #For recruit size, exclude all but recruits
 MCrs <- subset(MC,MC$fate_t=="R")
